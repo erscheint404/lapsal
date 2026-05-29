@@ -35,6 +35,9 @@ if ($isVercel) {
         'APP_EVENTS_CACHE' => '/tmp/events.php',
         'VIEW_COMPILED_PATH' => '/tmp/storage/framework/views',
         'LOG_CHANNEL' => 'stderr',
+        'CACHE_DRIVER' => 'file',
+        'SESSION_DRIVER' => 'cookie',
+        'QUEUE_CONNECTION' => 'sync',
     ];
 
     foreach ($tmpCaches as $key => $path) {
