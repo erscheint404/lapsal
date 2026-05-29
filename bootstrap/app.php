@@ -17,6 +17,49 @@ $app = new Illuminate\Foundation\Application(
 
 /*
 |--------------------------------------------------------------------------
+| Vercel Serverless Path Overrides
+|--------------------------------------------------------------------------
+*/
+$isVercel = isset($_SERVER['VERCEL_URL']) || isset($_ENV['VERCEL_URL']) || getenv('VERCEL_URL') !== false;
+
+if ($isVercel) {
+    // 1. Arahkan direktori storage utama ke /tmp
+    $app->useStoragePath('/tmp/storage');
+    
+    // 2. Arahkan semua kompilasi bootstrap cache ke /tmp agar tidak menulis ke root yang read-only
+    $tmpCaches = [
+        'APP_CONFIG_CACHE' => '/tmp/config.php',
+        'APP_SERVICES_CACHE' => '/tmp/services.php',
+        'APP_PACKAGES_CACHE' => '/tmp/packages.php',
+        'APP_ROUTES_CACHE' => '/tmp/routes.php',
+        'APP_EVENTS_CACHE' => '/tmp/events.php',
+        'VIEW_COMPILED_PATH' => '/tmp/storage/framework/views',
+        'LOG_CHANNEL' => 'stderr',
+    ];
+
+    foreach ($tmpCaches as $key => $path) {
+        $_ENV[$key] = $path;
+        $_SERVER[$key] = $path;
+        putenv("{$key}={$path}");
+    }
+    
+    // 3. Pastikan folder-folder penting untuk Laravel ada di /tmp
+    $dirs = [
+        '/tmp/storage/framework/views',
+        '/tmp/storage/framework/cache',
+        '/tmp/storage/framework/cache/data',
+        '/tmp/storage/framework/sessions',
+        '/tmp/storage/logs',
+    ];
+    foreach ($dirs as $dir) {
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
 | Bind Important Interfaces
 |--------------------------------------------------------------------------
 |
