@@ -1,219 +1,178 @@
 @extends('layouts.app')
 @section('title', 'Checkout Booking')
 @section('content')
-<div class="bg-dark-50 py-12 min-h-screen">
-    <div class="container-custom max-w-4xl">
-        <div class="mb-8 text-center">
-            <h1 class="text-3xl font-display font-bold text-dark-900 mb-2">Selesaikan Pembayaran</h1>
-            <p class="text-dark-500">Kode Booking: <span class="font-mono font-bold text-dark-900">{{ $booking->kode_booking }}</span></p>
+<div class="section-gradient min-h-screen pt-28 pb-16">
+    <div class="container-custom max-w-5xl">
+
+        <div class="mb-10 text-center max-w-2xl mx-auto reveal">
+            <span class="text-sm font-bold uppercase tracking-widest mb-2 block" style="color: #00b3cc;">Tahap Akhir</span>
+            <h1 class="text-3xl lg:text-4xl font-display font-black text-dark-900 tracking-tight">Selesaikan Pembayaran</h1>
+            <p class="text-dark-500 mt-2 leading-relaxed">Amankan jadwal bermainmu sekarang sebelum diambil orang lain.</p>
         </div>
 
-        {{-- Countdown Timer --}}
-        @if($remainingSeconds > 0)
-        <div class="mb-8 max-w-md mx-auto" x-data="countdownTimer({{ $remainingSeconds }})">
-            <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-4 text-center" :class="{'animate-pulse bg-red-100': seconds < 60}">
-                <p class="text-sm font-bold text-red-600 mb-1 uppercase tracking-widest">Sisa Waktu Pembayaran</p>
-                <div class="text-3xl font-display font-black text-red-700 flex items-center justify-center gap-2">
-                    <i class="far fa-clock"></i>
-                    <span x-text="formatTime(seconds)"></span>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {{-- Form Column --}}
+            <div class="lg:col-span-2 space-y-6 reveal-left">
+                {{-- Warning Timer (Simulated) --}}
+                <div class="rounded-2xl p-4 flex items-center justify-between" style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2);">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-clock text-amber-500 text-lg"></i>
+                        <span class="font-bold text-amber-700 text-sm">Selesaikan pembayaran sebelum:</span>
+                    </div>
+                    <span class="font-black text-amber-600 font-display text-lg tracking-wider">{{ $booking->created_at->addMinutes(30)->format('H:i') }}</span>
                 </div>
-                <p class="text-xs text-red-500 mt-2">Selesaikan pembayaran sebelum waktu habis agar slot tidak dibatalkan otomatis.</p>
-            </div>
-        </div>
-        @else
-        <div class="mb-8 max-w-md mx-auto">
-            <div class="bg-red-50 border border-red-200 rounded-2xl p-4 text-center">
-                <p class="font-bold text-red-700 mb-1">Waktu Pembayaran Habis</p>
-                <p class="text-sm text-red-600">Booking ini telah kadaluarsa karena melewati batas waktu.</p>
-            </div>
-        </div>
-        @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {{-- Ringkasan Booking --}}
-            <div class="space-y-6">
-                <div class="card p-6">
-                    <h3 class="font-bold text-lg border-b border-dark-100 pb-4 mb-4">Ringkasan Pesanan</h3>
-                    
-                    <div class="flex gap-4 mb-6">
-                        <div class="w-20 h-20 rounded-xl bg-dark-100 overflow-hidden flex-none">
+                <div class="card-premium p-8">
+                    <h3 class="font-bold text-xl text-dark-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-receipt" style="color: #6e8f00;"></i> Detail Pemesan
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="form-label text-xs">Nama Lengkap</label>
+                            <div class="font-bold text-dark-900">{{ auth()->user()->name }}</div>
+                        </div>
+                        <div>
+                            <label class="form-label text-xs">Email</label>
+                            <div class="font-bold text-dark-900">{{ auth()->user()->email }}</div>
+                        </div>
+                        <div>
+                            <label class="form-label text-xs">No. Telepon</label>
+                            <div class="font-bold text-dark-900">{{ auth()->user()->phone ?? '-' }}</div>
+                        </div>
+                        <div>
+                            <label class="form-label text-xs">Kode Booking</label>
+                            <div class="font-mono font-black text-lg" style="color: #6e8f00;">{{ $booking->kode_booking }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-premium p-8">
+                    <h3 class="font-bold text-xl text-dark-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-credit-card" style="color: #00b3cc;"></i> Metode Pembayaran
+                    </h3>
+
+                    <form action="{{ route('member.booking.pay', $booking->id) }}" method="POST" id="payment-form">
+                        @csrf
+                        <div class="space-y-4 mb-8">
+                            {{-- Midtrans --}}
+                            <label class="block cursor-pointer">
+                                <input type="radio" name="payment_method" value="midtrans" class="peer sr-only" checked>
+                                <div class="p-5 rounded-2xl border-2 transition-all duration-300 peer-checked:bg-white
+                                     peer-checked:border-primary-500 peer-checked:shadow-lg peer-checked:shadow-primary-500/10
+                                     bg-dark-50 border-dark-200/50 hover:border-dark-300 relative overflow-hidden group">
+                                    <div class="absolute inset-0 opacity-0 peer-checked:opacity-100 transition-opacity"
+                                         style="background: linear-gradient(135deg, rgba(204,255,0,0.05), transparent);"></div>
+                                    <div class="flex items-center justify-between relative z-10">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all peer-checked:bg-primary-100 peer-checked:text-primary-700"
+                                                 style="background: rgba(0,0,0,0.04); color: #627d9e;">
+                                                <i class="fas fa-bolt text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-dark-900 text-lg">Bayar Otomatis (Midtrans)</h4>
+                                                <p class="text-sm text-dark-500 mt-0.5">Transfer Bank, E-Wallet (OVO, GoPay), Kartu Kredit.</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-6 h-6 rounded-full border-2 border-dark-300 flex items-center justify-center peer-checked:border-primary-500 peer-checked:bg-primary-500">
+                                            <i class="fas fa-check text-white text-xs opacity-0 peer-checked:opacity-100"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-4 hidden peer-checked:block transition-all" style="border-top: 1px dashed rgba(0,0,0,0.1);">
+                                        <div class="flex gap-2">
+                                            <span class="px-2 py-1 bg-dark-50 rounded text-xs font-bold text-dark-500 border border-dark-100">BCA</span>
+                                            <span class="px-2 py-1 bg-dark-50 rounded text-xs font-bold text-dark-500 border border-dark-100">Mandiri</span>
+                                            <span class="px-2 py-1 bg-dark-50 rounded text-xs font-bold text-dark-500 border border-dark-100">GoPay</span>
+                                            <span class="px-2 py-1 bg-dark-50 rounded text-xs font-bold text-dark-500 border border-dark-100">OVO</span>
+                                            <span class="text-xs text-dark-400 self-center ml-2">+ lainnya</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            {{-- Manual --}}
+                            <label class="block cursor-pointer">
+                                <input type="radio" name="payment_method" value="manual" class="peer sr-only">
+                                <div class="p-5 rounded-2xl border-2 transition-all duration-300 peer-checked:bg-white
+                                     peer-checked:border-accent-500 peer-checked:shadow-lg peer-checked:shadow-accent-500/10
+                                     bg-dark-50 border-dark-200/50 hover:border-dark-300 relative overflow-hidden group">
+                                     <div class="absolute inset-0 opacity-0 peer-checked:opacity-100 transition-opacity"
+                                         style="background: linear-gradient(135deg, rgba(0,229,255,0.05), transparent);"></div>
+                                    <div class="flex items-center justify-between relative z-10">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all peer-checked:bg-accent-100 peer-checked:text-accent-700"
+                                                 style="background: rgba(0,0,0,0.04); color: #627d9e;">
+                                                <i class="fas fa-file-invoice text-xl"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-dark-900 text-lg">Transfer Manual</h4>
+                                                <p class="text-sm text-dark-500 mt-0.5">Transfer langsung ke rekening kami dan upload bukti.</p>
+                                            </div>
+                                        </div>
+                                        <div class="w-6 h-6 rounded-full border-2 border-dark-300 flex items-center justify-center peer-checked:border-accent-500 peer-checked:bg-accent-500">
+                                            <i class="fas fa-check text-white text-xs opacity-0 peer-checked:opacity-100"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-full py-4 text-lg">
+                            Proses Pembayaran <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Summary Sidebar --}}
+            <div class="lg:col-span-1 reveal-right">
+                <div class="card-premium p-6 sticky top-28 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(204,255,0,0.15);"></div>
+
+                    <h3 class="font-bold text-xl text-dark-900 mb-6 relative z-10">Ringkasan Booking</h3>
+
+                    <div class="flex gap-4 mb-6 relative z-10">
+                        <div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 border border-dark-100">
                             @if($booking->lapangan->foto_utama)
                             <img src="{{ Storage::url($booking->lapangan->foto_utama) }}" class="w-full h-full object-cover">
+                            @else
+                            <div class="w-full h-full bg-dark-100 flex items-center justify-center text-dark-300"><i class="fas fa-image"></i></div>
                             @endif
                         </div>
                         <div>
-                            <p class="font-bold text-dark-900 text-lg leading-tight">{{ $booking->lapangan->nama }}</p>
-                            <span class="badge badge-success mt-1">{{ ucfirst(str_replace('_', ' ', $booking->lapangan->tipe)) }}</span>
+                            <p class="font-bold text-dark-900 leading-tight mb-1">{{ $booking->lapangan->nama }}</p>
+                            <span class="badge badge-info text-[10px]">{{ ucfirst(str_replace('_', ' ', $booking->lapangan->tipe)) }}</span>
                         </div>
                     </div>
 
-                    <div class="space-y-3 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-dark-500">Tanggal</span>
-                            <span class="font-semibold text-dark-900">{{ $booking->tanggal->translatedFormat('l, d M Y') }}</span>
+                    <div class="space-y-4 mb-6 relative z-10 text-sm">
+                        <div class="flex justify-between items-center pb-4" style="border-bottom: 1px dashed rgba(0,0,0,0.1);">
+                            <span class="text-dark-500 flex items-center gap-2"><i class="far fa-calendar-alt text-dark-400"></i> Tanggal</span>
+                            <span class="font-bold text-dark-900">{{ $booking->tanggal->format('d M Y') }}</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-dark-500">Waktu</span>
-                            <span class="font-semibold text-dark-900">{{ substr($booking->jam_mulai, 0, 5) }} - {{ substr($booking->jam_selesai, 0, 5) }} WIB</span>
+                        <div class="flex justify-between items-center pb-4" style="border-bottom: 1px dashed rgba(0,0,0,0.1);">
+                            <span class="text-dark-500 flex items-center gap-2"><i class="far fa-clock text-dark-400"></i> Waktu</span>
+                            <span class="font-bold text-dark-900">{{ substr($booking->jam_mulai, 0, 5) }} - {{ substr($booking->jam_selesai, 0, 5) }}</span>
                         </div>
-                        <div class="flex justify-between">
-                            <span class="text-dark-500">Durasi</span>
-                            <span class="font-semibold text-dark-900">{{ $booking->durasi_jam }} Jam</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-dark-500">Harga / Jam</span>
-                            <span class="font-semibold text-dark-900">Rp {{ number_format($booking->lapangan->harga_per_jam, 0, ',', '.') }}</span>
+                        <div class="flex justify-between items-center pb-4" style="border-bottom: 1px dashed rgba(0,0,0,0.1);">
+                            <span class="text-dark-500 flex items-center gap-2"><i class="fas fa-hourglass-half text-dark-400"></i> Durasi</span>
+                            <span class="font-bold text-dark-900">{{ $booking->durasi }} Jam</span>
                         </div>
                     </div>
 
-                    <div class="mt-6 pt-4 border-t border-dashed border-dark-200 flex justify-between items-center">
-                        <span class="font-bold text-dark-900">Total Pembayaran</span>
-                        <span class="text-2xl font-black text-primary-600">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</span>
-                    </div>
-                </div>
-
-                @if($booking->canBeCancelled())
-                <form action="{{ route('member.booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan booking ini?');">
-                    @csrf
-                    <button type="submit" class="w-full text-center py-3 text-sm font-bold text-dark-500 hover:text-red-500 transition-colors">
-                        Batalkan Booking
-                    </button>
-                </form>
-                @endif
-            </div>
-
-            {{-- Metode Pembayaran --}}
-            <div>
-                @if($remainingSeconds > 0)
-                    <div class="card p-6 h-full flex flex-col">
-                        <h3 class="font-bold text-lg border-b border-dark-100 pb-4 mb-4">Pilih Pembayaran</h3>
-                        
-                        <div class="flex-1 space-y-4" x-data="{ method: '{{ $booking->metode_pembayaran }}' }">
-                            
-                            {{-- Midtrans (Otomatis) --}}
-                            <label class="block relative cursor-pointer group">
-                                <input type="radio" name="metode" value="midtrans" x-model="method" class="peer sr-only">
-                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 bg-white border-dark-200 group-hover:border-primary-300">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center peer-checked:border-primary-500 border-dark-300" :class="method === 'midtrans' ? 'border-primary-500' : ''">
-                                                <div class="w-2.5 h-2.5 rounded-full bg-primary-500 transform scale-0 transition-transform" :class="method === 'midtrans' ? 'scale-100' : ''"></div>
-                                            </div>
-                                            <span class="font-bold text-dark-900">Otomatis (Midtrans)</span>
-                                        </div>
-                                        <span class="badge badge-success text-xs">Rekomendasi</span>
-                                    </div>
-                                    <p class="text-sm text-dark-500 ml-8">Bayar pakai Gopay, Qris, Virtual Account BCA/Mandiri/BNI. Konfirmasi instan.</p>
-                                </div>
-                            </label>
-
-                            {{-- Manual Transfer --}}
-                            <label class="block relative cursor-pointer group">
-                                <input type="radio" name="metode" value="manual" x-model="method" class="peer sr-only">
-                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50 bg-white border-dark-200 group-hover:border-primary-300">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center border-dark-300" :class="method === 'manual' ? 'border-primary-500' : ''">
-                                            <div class="w-2.5 h-2.5 rounded-full bg-primary-500 transform scale-0 transition-transform" :class="method === 'manual' ? 'scale-100' : ''"></div>
-                                        </div>
-                                        <span class="font-bold text-dark-900">Transfer Manual</span>
-                                    </div>
-                                    <p class="text-sm text-dark-500 ml-8">Transfer manual ke rekening pengelola. Membutuhkan verifikasi admin (1-2 jam).</p>
-                                </div>
-                            </label>
-
-                            {{-- Payment Actions --}}
-                            <div class="mt-8 pt-4">
-                                {{-- Midtrans Button --}}
-                                <div x-show="method === 'midtrans'">
-                                    <button id="pay-button" class="btn-primary w-full py-4 text-lg shadow-lg shadow-primary-500/30">
-                                        Bayar Sekarang <i class="fas fa-lock ml-2 text-xs opacity-70"></i>
-                                    </button>
-                                </div>
-
-                                {{-- Manual Form --}}
-                                <div x-show="method === 'manual'" x-transition>
-                                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl mb-4">
-                                        <p class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2">Transfer ke Rekening Berikut:</p>
-                                        <p class="font-bold text-dark-900">BCA - 1234567890</p>
-                                        <p class="text-sm text-dark-600">A/N Lapsal Futsal</p>
-                                    </div>
-
-                                    <form action="{{ route('member.booking.payment.manual', $booking->id) }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-4">
-                                            <label class="form-label">Upload Bukti Transfer</label>
-                                            <input type="file" name="bukti_transfer" class="form-input p-2 text-sm" accept="image/*" required>
-                                            <p class="form-help">Format: JPG, PNG. Maksimal 5MB.</p>
-                                        </div>
-                                        <button type="submit" class="btn-primary w-full">Kirim Bukti Pembayaran</button>
-                                    </form>
-                                </div>
+                    <div class="pt-2 relative z-10">
+                        <div class="p-4 rounded-2xl" style="background: rgba(10,18,33,0.95); border: 1px solid rgba(204,255,0,0.2);">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-medium text-dark-300">Total Pembayaran</span>
+                            </div>
+                            <div class="text-2xl font-display font-black" style="color: #ccff00; text-shadow: 0 0 20px rgba(204,255,0,0.2);">
+                                Rp {{ number_format($booking->total_harga, 0, ',', '.') }}
                             </div>
                         </div>
                     </div>
-                @else
-                    <div class="card p-8 flex flex-col items-center justify-center text-center h-full">
-                        <div class="w-20 h-20 bg-dark-50 rounded-full flex items-center justify-center mb-4 border-2 border-dark-100 text-dark-300">
-                            <i class="fas fa-times text-3xl"></i>
-                        </div>
-                        <h3 class="font-bold text-dark-900 mb-2">Tidak Dapat Membayar</h3>
-                        <p class="text-dark-500 text-sm">Waktu pembayaran telah habis atau booking sudah dibatalkan.</p>
-                        <a href="{{ route('lapangan.index') }}" class="btn-primary mt-6">Buat Booking Baru</a>
-                    </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-@push('scripts')
-@if($booking->metode_pembayaran === 'midtrans' && $snapToken && $remainingSeconds > 0)
-<script src="{{ config('midtrans.is_production') ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
-<script>
-    document.getElementById('pay-button').onclick = function () {
-        snap.pay('{{ $snapToken }}', {
-            onSuccess: function(result) {
-                window.location.href = "{{ route('member.booking.show', $booking->id) }}";
-            },
-            onPending: function(result) {
-                window.location.href = "{{ route('member.booking.show', $booking->id) }}";
-            },
-            onError: function(result) {
-                alert("Pembayaran gagal!");
-            },
-            onClose: function() {
-                // Modal ditutup
-            }
-        });
-    };
-</script>
-@endif
-
-<script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('countdownTimer', (initialSeconds) => ({
-        seconds: initialSeconds,
-        timer: null,
-        
-        init() {
-            if (this.seconds > 0) {
-                this.timer = setInterval(() => {
-                    this.seconds--;
-                    if (this.seconds <= 0) {
-                        clearInterval(this.timer);
-                        window.location.reload();
-                    }
-                }, 1000);
-            }
-        },
-        
-        formatTime(sec) {
-            let m = Math.floor(sec / 60);
-            let s = sec % 60;
-            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-        }
-    }));
-});
-</script>
-@endpush
 @endsection

@@ -69,4 +69,18 @@ class BookingController extends Controller
 
         return back()->with('success', 'Booking berhasil diselesaikan.');
     }
+
+    public function updateStatus(Request $request, Booking $booking, BookingService $bookingService)
+    {
+        $request->validate(['status' => 'required|in:completed']);
+        
+        if ($request->status === 'completed') {
+            if ($booking->status !== 'confirmed') {
+                return back()->with('error', 'Hanya booking dengan status confirmed yang bisa diselesaikan.');
+            }
+            $bookingService->completeBooking($booking, auth()->id());
+        }
+
+        return back()->with('success', 'Status booking berhasil diperbarui.');
+    }
 }

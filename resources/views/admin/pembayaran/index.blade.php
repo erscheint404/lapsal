@@ -1,96 +1,110 @@
 @extends('layouts.admin')
 @section('title', 'Verifikasi Pembayaran')
-@section('page_title', 'Verifikasi Pembayaran Manual')
+@section('page_title', 'Verifikasi Pembayaran')
+@section('page_description', 'Cek dan verifikasi bukti transfer manual dari member.')
 
 @section('content')
-<div class="bg-white rounded-2xl border border-dark-100 shadow-sm overflow-hidden">
-    <div class="p-6 border-b border-dark-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-amber-50/50">
-        <div>
-            <h2 class="font-bold text-lg text-dark-900">Menunggu Verifikasi</h2>
-            <p class="text-sm text-dark-500">Cek mutasi bank dan cocokkan dengan bukti transfer yang diupload member.</p>
-        </div>
-        
-        <form action="{{ route('admin.pembayaran.index') }}" method="GET" class="flex gap-2">
-            <select name="status" class="form-input py-2 bg-white" onchange="this.form.submit()">
-                <option value="under_review" {{ request('status', 'under_review') == 'under_review' ? 'selected' : '' }}>Perlu Review ({{ \App\Models\Booking::where('status', 'under_review')->count() }})</option>
-                <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Sudah Diverifikasi</option>
-                <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Ditolak</option>
+<div class="card-premium overflow-hidden">
+    <div class="p-6 border-b border-dark-100/60 flex flex-col md:flex-row md:items-center justify-between gap-4" style="background: rgba(0,0,0,0.01);">
+        <form action="{{ route('admin.pembayaran.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 w-full md:w-auto flex-1">
+            <select name="status" class="py-2.5 px-4 text-sm bg-white border border-dark-100/80 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 shadow-sm outline-none">
                 <option value="">Semua Status</option>
+                <option value="under_review" {{ request('status') == 'under_review' ? 'selected' : '' }}>Dalam Pengecekan</option>
+                <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Terkonfirmasi (Valid)</option>
+                <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Ditolak / Invalid</option>
             </select>
+            <button type="submit" class="btn-primary py-2.5 px-4"><i class="fas fa-filter"></i></button>
+            @if(request()->filled('status'))
+            <a href="{{ route('admin.pembayaran.index') }}" class="btn-secondary py-2.5 px-4"><i class="fas fa-times"></i></a>
+            @endif
         </form>
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-left">
+        <table class="table-modern w-full">
             <thead>
-                <tr class="bg-dark-50 border-b border-dark-100">
-                    <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Waktu Upload</th>
-                    <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Booking Info</th>
-                    <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Nominal</th>
-                    <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase text-center">Bukti Transfer</th>
-                    <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase text-right">Aksi</th>
+                <tr>
+                    <th class="py-4 px-6 text-left text-xs font-bold text-dark-400 uppercase tracking-wider">Booking & Member</th>
+                    <th class="py-4 px-6 text-left text-xs font-bold text-dark-400 uppercase tracking-wider">Bukti Transfer</th>
+                    <th class="py-4 px-6 text-left text-xs font-bold text-dark-400 uppercase tracking-wider">Total & Waktu</th>
+                    <th class="py-4 px-6 text-center text-xs font-bold text-dark-400 uppercase tracking-wider">Status</th>
+                    <th class="py-4 px-6 text-right text-xs font-bold text-dark-400 uppercase tracking-wider w-40">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-dark-100">
+            <tbody class="divide-y divide-dark-100/40">
                 @forelse($bookings as $booking)
-                <tr class="hover:bg-dark-50/50 transition-colors">
+                <tr class="hover:bg-dark-50/50 transition-colors group">
                     <td class="py-4 px-6">
-                        @if($booking->buktiPembayaran)
-                        <div class="font-medium text-dark-900">{{ $booking->buktiPembayaran->created_at->format('d/m/Y') }}</div>
-                        <div class="text-xs text-dark-500">{{ $booking->buktiPembayaran->created_at->format('H:i') }} WIB</div>
-                        <div class="text-[10px] mt-1 text-dark-400">{{ $booking->buktiPembayaran->created_at->diffForHumans() }}</div>
-                        @else
-                        <span class="text-xs text-dark-400 italic">Belum upload</span>
-                        @endif
+                        <div class="font-mono text-sm font-bold text-dark-900 mb-1 hover:text-primary-600 transition-colors">
+                            <a href="{{ route('admin.booking.show', $booking->id) }}">{{ $booking->kode_booking }}</a>
+                        </div>
+                        <div class="text-xs text-dark-500 flex items-center gap-2">
+                            <i class="fas fa-user text-dark-300"></i> {{ $booking->user->name }}
+                        </div>
                     </td>
                     <td class="py-4 px-6">
-                        <div class="font-mono font-bold text-primary-600 mb-1">{{ $booking->kode_booking }}</div>
-                        <div class="text-sm font-medium text-dark-900">{{ $booking->user->name }}</div>
-                        <div class="text-xs text-dark-500">{{ $booking->lapangan->nama }} ({{ $booking->tanggal->format('d/m/Y') }})</div>
-                    </td>
-                    <td class="py-4 px-6">
-                        <span class="font-bold text-dark-900 text-lg">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</span>
-                    </td>
-                    <td class="py-4 px-6 text-center">
-                        @if($booking->buktiPembayaran)
-                        <a href="{{ Storage::url($booking->buktiPembayaran->file_path) }}" target="_blank" class="inline-block relative group">
-                            <div class="w-16 h-16 rounded-xl bg-dark-100 overflow-hidden border-2 border-dark-200 group-hover:border-primary-500 transition-colors">
-                                <img src="{{ Storage::url($booking->buktiPembayaran->file_path) }}" class="w-full h-full object-cover">
-                            </div>
-                            <div class="absolute inset-0 bg-dark-900/40 rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        @if($booking->buktiPembayaran && $booking->buktiPembayaran->file_path)
+                        <a href="{{ Storage::url($booking->buktiPembayaran->file_path) }}" target="_blank" class="inline-block relative overflow-hidden rounded-xl border border-dark-200 group/img">
+                            <img src="{{ Storage::url($booking->buktiPembayaran->file_path) }}" class="w-16 h-16 object-cover transition-transform group-hover/img:scale-110">
+                            <div class="absolute inset-0 bg-dark-900/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
                                 <i class="fas fa-search-plus text-white"></i>
                             </div>
                         </a>
                         @else
-                        -
+                        <span class="text-xs text-dark-400 italic">Tidak ada bukti</span>
                         @endif
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="font-bold text-dark-900 text-sm mb-1">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</div>
+                        <div class="text-xs text-dark-500"><i class="far fa-clock mr-1"></i> {{ $booking->buktiPembayaran ? $booking->buktiPembayaran->created_at->format('d M H:i') : '-' }}</div>
+                    </td>
+                    <td class="py-4 px-6 text-center">
+                        <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }};">
+                            {{ $booking->status_label }}
+                        </span>
                     </td>
                     <td class="py-4 px-6 text-right">
                         @if($booking->status === 'under_review')
-                        <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn-primary py-1.5 px-4 text-xs bg-amber-500 hover:bg-amber-600 border-none shadow-md shadow-amber-500/20 whitespace-nowrap">
-                            Review <i class="fas fa-arrow-right ml-1"></i>
-                        </a>
+                        <div class="flex items-center justify-end gap-2">
+                            <form action="{{ route('admin.pembayaran.verify', $booking->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="action" value="approve">
+                                <button type="submit" class="w-8 h-8 rounded-lg flex items-center justify-center bg-primary-50 text-primary-600 hover:bg-primary-100 hover:text-primary-700 transition-colors tooltip" data-tip="Terima (Valid)" onclick="return confirm('Validasi pembayaran ini?')">
+                                    <i class="fas fa-check text-sm"></i>
+                                </button>
+                            </form>
+                            <form action="{{ route('admin.pembayaran.verify', $booking->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="action" value="reject">
+                                <input type="hidden" name="catatan" value="Bukti transfer tidak valid/tidak jelas">
+                                <button type="submit" class="w-8 h-8 rounded-lg flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-colors tooltip" data-tip="Tolak (Invalid)" onclick="return confirm('Tolak pembayaran ini?')">
+                                    <i class="fas fa-times text-sm"></i>
+                                </button>
+                            </form>
+                        </div>
                         @else
-                        <span class="badge {{ $booking->status_color }}">{{ $booking->status_label }}</span>
+                        <a href="{{ route('admin.booking.show', $booking->id) }}" class="btn-secondary py-1.5 px-3 text-xs rounded-lg shadow-none opacity-0 group-hover:opacity-100 transition-opacity">Detail</a>
                         @endif
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="py-12 text-center text-dark-500">
-                        <div class="w-16 h-16 bg-dark-50 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl text-dark-300">
-                            <i class="fas fa-check-double"></i>
+                    <td colspan="5" class="py-12 text-center">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: rgba(0,0,0,0.03); color: #627d9e;">
+                            <i class="fas fa-check-circle text-2xl"></i>
                         </div>
-                        Tidak ada antrean verifikasi pembayaran saat ini.
+                        <p class="text-dark-900 font-bold mb-1">Semua Selesai</p>
+                        <p class="text-sm text-dark-500">Tidak ada pembayaran manual yang perlu diverifikasi.</p>
                     </td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-    
-    <div class="p-6 border-t border-dark-100">
+    @if($bookings->hasPages())
+    <div class="p-5 border-t border-dark-100/60" style="background: rgba(0,0,0,0.01);">
         {{ $bookings->links() }}
     </div>
+    @endif
 </div>
 @endsection

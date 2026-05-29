@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\LaporanPendapatanExport;
+use App\Exports\LaporanPenyewaanExport;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Lapangan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -78,5 +81,25 @@ class LaporanController extends Controller
         }
 
         return view('admin.laporan.pendapatan', compact('bookings', 'totalPendapatan', 'perHari', 'chartLabels', 'chartData', 'startDate', 'endDate'));
+    }
+
+    public function penyewaanExcel(Request $request)
+    {
+        $startDate = $request->start_date ?? now()->startOfMonth()->format('Y-m-d');
+        $endDate = $request->end_date ?? now()->format('Y-m-d');
+        return Excel::download(
+            new LaporanPenyewaanExport($startDate, $endDate),
+            'laporan-penyewaan-' . $startDate . '-to-' . $endDate . '.xlsx'
+        );
+    }
+
+    public function pendapatanExcel(Request $request)
+    {
+        $startDate = $request->start_date ?? now()->startOfMonth()->format('Y-m-d');
+        $endDate = $request->end_date ?? now()->format('Y-m-d');
+        return Excel::download(
+            new LaporanPendapatanExport($startDate, $endDate),
+            'laporan-pendapatan-' . $startDate . '-to-' . $endDate . '.xlsx'
+        );
     }
 }

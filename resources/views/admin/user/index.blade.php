@@ -3,14 +3,14 @@
 @section('page_title', 'Manajemen User')
 
 @section('content')
-<div class="bg-white rounded-2xl border border-dark-100 shadow-sm overflow-hidden">
-    <div class="p-6 border-b border-dark-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="card-premium overflow-hidden">
+    <div class="p-7 border-b border-dark-100/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <form action="{{ route('admin.user.index') }}" method="GET" class="flex flex-wrap gap-3 w-full md:w-auto">
             <div class="relative w-full md:w-64">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-dark-400"><i class="fas fa-search"></i></span>
-                <input type="text" name="search" value="{{ request('search') }}" class="form-input py-2 pl-10" placeholder="Cari nama / email...">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400"><i class="fas fa-search"></i></span>
+                <input type="text" name="search" value="{{ request('search') }}" class="form-input py-2.5 pl-11" placeholder="Cari nama / email...">
             </div>
-            <select name="role" class="form-input py-2" onchange="this.form.submit()">
+            <select name="role" class="form-input py-2.5" onchange="this.form.submit()">
                 <option value="">Semua Role</option>
                 <option value="member" {{ request('role') == 'member' ? 'selected' : '' }}>Member</option>
                 <option value="petugas" {{ request('role') == 'petugas' ? 'selected' : '' }}>Petugas</option>
@@ -20,25 +20,25 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-left">
+        <table class="table-modern">
             <thead>
-                <tr class="bg-dark-50 border-b border-dark-100">
+                <tr>
                     <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">User</th>
                     <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Kontak</th>
                     <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Role</th>
                     <th class="py-4 px-6 text-xs font-bold text-dark-500 uppercase">Bergabung</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-dark-100">
+            <tbody class="divide-y divide-dark-100/80">
                 @forelse($users as $user)
                 <tr class="hover:bg-dark-50/50 transition-colors">
                     <td class="py-4 px-6">
                         <div class="flex items-center gap-3">
-                            <img src="{{ $user->avatar_url }}" class="w-10 h-10 rounded-full object-cover bg-dark-100">
+                            <img src="{{ $user->avatar_url }}" class="w-10 h-10 rounded-full object-cover bg-dark-100 ring-2 ring-dark-100">
                             <div>
                                 <p class="font-bold text-dark-900">{{ $user->name }}</p>
                                 @if($user->google_id)
-                                <span class="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-bold"><i class="fab fa-google mr-1"></i> Google Auth</span>
+                                <span class="text-[10px] bg-red-100/80 text-red-600 px-2 py-0.5 rounded-lg font-bold inline-flex items-center"><i class="fab fa-google mr-1"></i> Google Auth</span>
                                 @endif
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                         <p class="text-xs text-dark-500">{{ $user->phone ?? '-' }}</p>
                     </td>
                     <td class="py-4 px-6">
-                        <span class="badge {{ $user->role === 'admin' ? 'badge-error' : ($user->role === 'petugas' ? 'bg-blue-100 text-blue-800' : 'badge-success') }}">
+                        <span class="badge {{ $user->role === 'admin' ? 'badge-primary' : ($user->role === 'petugas' ? 'bg-blue-100 text-blue-800 border-blue-200/80' : 'badge-success') }}">
                             {{ ucfirst($user->role) }}
                         </span>
                     </td>
@@ -58,14 +58,13 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="py-8 text-center text-dark-500">Data user tidak ditemukan.</td>
+                    <td colspan="4" class="py-12 text-center text-dark-500">Data user tidak ditemukan.</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-    
-    <div class="p-6 border-t border-dark-100">
+    <div class="p-6 border-t border-dark-100/80">
         {{ $users->links() }}
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Booking;
+use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
 
@@ -21,6 +22,8 @@ class MidtransService
      */
     public function createSnapToken(Booking $booking): string
     {
+        $idempotencyKey = $booking->idempotency_key ?? Str::uuid()->toString();
+
         $params = [
             'transaction_details' => [
                 'order_id' => $booking->midtrans_order_id ?? $booking->kode_booking . '-' . time(),
@@ -42,7 +45,14 @@ class MidtransService
             'callbacks' => [
                 'finish' => route('member.booking.show', $booking->id),
             ],
+            'headers' => [
+                'X-Idempotency-Key' => $idempotencyKey,
+            ],
         ];
+
+        if (empty($booking->idempotency_key)) {
+            $booking->update(['idempotency_key' => $idempotencyKey]);
+        }
 
         $snapToken = Snap::getSnapToken($params);
 

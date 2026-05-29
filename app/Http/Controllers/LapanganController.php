@@ -6,12 +6,20 @@ use App\Models\Lapangan;
 use App\Models\SlotWaktu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class LapanganController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Lapangan::aktif();
+        if ($request->anyFilled(['search', 'tipe', 'harga_min', 'harga_max', 'sort'])) {
+            $query = Lapangan::aktif();
+        } else {
+            $lapangan = Cache::remember('lapangan.index', 300, function () {
+                return Lapangan::aktif()->latest()->paginate(12);
+            });
+            return view('lapangan.index', compact('lapangan'));
+        }
 
         if ($request->filled('search')) {
             $query->where('nama', 'like', '%' . $request->search . '%');

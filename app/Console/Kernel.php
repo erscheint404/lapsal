@@ -31,6 +31,32 @@ class Kernel extends ConsoleKernel
                 $bookingService->completeBooking($booking);
             }
         })->everyFiveMinutes();
+
+        // Auto-generate slots for 14 days ahead every day at midnight (rolling 14-day window)
+        $schedule->call(function () {
+            $activeFields = \App\Models\Lapangan::aktif()->get();
+            $targetDate = today()->addDays(14)->format('Y-m-d');
+            
+            // Get operational hours from settings
+            $jamBuka = (int)\App\Models\Pengaturan::getValue('jam_buka', '8');
+            $jamTutup = (int)\App\Models\Pengaturan::getValue('jam_tutup', '23');
+
+            foreach ($activeFields as $lapangan) {
+                for ($jam = $jamBuka; $jam < $jamTutup; $jam++) {
+                    \App\Models\SlotWaktu::firstOrCreate(
+                        [
+                            'lapangan_id' => $lapangan->id,
+                            'tanggal' => $targetDate,
+                            'jam_mulai' => sprintf('%02d:00:00', $jam),
+                        ],
+                        [
+                            'jam_selesai' => sprintf('%02d:00:00', $jam + 1),
+                            'status' => 'available',
+                        ]
+                    );
+                }
+            }
+        })->dailyAt('00:00');
     }
 
     /**

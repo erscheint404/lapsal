@@ -23,6 +23,20 @@ class BookingController extends Controller
 
         $bookings = $query->latest()->paginate(10);
 
+        // Auto-complete any confirmed bookings that have passed
+        $bookingService = app(\App\Services\BookingService::class);
+        foreach ($bookings as $booking) {
+            if ($booking->status === 'confirmed') {
+                $isPast = $booking->tanggal->isBefore(today()) || 
+                         ($booking->tanggal->isToday() && now()->format('H:i:s') > $booking->jam_selesai);
+                
+                if ($isPast) {
+                    $bookingService->completeBooking($booking);
+                    $booking->status = 'completed'; // update instance for view
+                }
+            }
+        }
+
         return view('member.booking.index', compact('bookings'));
     }
 
@@ -70,7 +84,7 @@ class BookingController extends Controller
         }
     }
 
-    public function store(Request $request, BookingService $bookingService)
+    public function store(Request $request, BookingService $bookingService, MidtransService $midtransService)
     {
         $request->validate([
             'lapangan_id' => 'required|exists:lapangan,id',
@@ -88,14 +102,27 @@ class BookingController extends Controller
                 $request->metode_pembayaran
             );
 
+            // If AJAX request with midtrans, return snap token for inline popup
+            if ($request->ajax() && $request->metode_pembayaran === 'midtrans') {
+                $snapToken = $midtransService->createSnapToken($booking);
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $snapToken,
+                    'booking_id' => $booking->id,
+                ]);
+            }
+
             return redirect()->route('member.booking.checkout', $booking->id)
                 ->with('success', 'Booking berhasil dibuat. Silakan selesaikan pembayaran.');
         } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+            }
             return back()->with('error', $e->getMessage())->withInput();
         }
     }
 
-    public function show(\Illuminate\Http\Request $request, Booking $booking, MidtransService $midtransService)
+    public function show(\Illuminate\Http\Request $request, Booking $booking, MidtransService $midtransService, BookingService $bookingService)
     {
         if ($booking->user_id !== auth()->id()) {
             abort(403);
@@ -107,9 +134,25 @@ class BookingController extends Controller
             $booking->refresh();
         }
 
+        // Auto-complete if time has passed
+        if ($booking->status === 'confirmed') {
+            $isPast = $booking->tanggal->isBefore(today()) || 
+                     ($booking->tanggal->isToday() && now()->format('H:i:s') > $booking->jam_selesai);
+            
+            if ($isPast) {
+                $bookingService->completeBooking($booking);
+                $booking->refresh();
+            }
+        }
+
+        $snapToken = null;
+        if ($booking->metode_pembayaran === 'midtrans' && $booking->status === 'pending_payment') {
+            $snapToken = $booking->midtrans_snap_token ?? $midtransService->createSnapToken($booking);
+        }
+
         $booking->load(['lapangan', 'buktiPembayaran', 'riwayat.changedByUser', 'rating', 'statistikGol']);
 
-        return view('member.booking.show', compact('booking'));
+        return view('member.booking.show', compact('booking', 'snapToken'));
     }
 
     public function checkout(Booking $booking, MidtransService $midtransService, SlotLockService $slotLockService)
@@ -135,6 +178,30 @@ class BookingController extends Controller
         }
 
         return view('member.booking.checkout', compact('booking', 'snapToken', 'remainingSeconds'));
+    }
+
+    public function pay(\Illuminate\Http\Request $request, Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'payment_method' => 'required|in:midtrans,manual'
+        ]);
+
+        if ($request->payment_method === 'manual') {
+            if ($booking->metode_pembayaran !== 'manual') {
+                $booking->update(['metode_pembayaran' => 'manual']);
+            }
+            return view('member.booking.manual-payment', compact('booking'));
+        }
+
+        if ($booking->metode_pembayaran !== 'midtrans') {
+            $booking->update(['metode_pembayaran' => 'midtrans']);
+        }
+        
+        return redirect()->route('member.booking.show', $booking->id);
     }
 
     public function cancel(Booking $booking, BookingService $bookingService)

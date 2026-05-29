@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Admin Lapsal',
                 'password' => Hash::make('password'),
                 'role_id' => $adminRole->id,
-                'phone' => '081234567890',
+                'phone' => '082215042019',
                 'email_verified_at' => now(),
             ]
         );
@@ -34,7 +34,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Petugas Lapsal',
                 'password' => Hash::make('password'),
                 'role_id' => $petugasRole->id,
-                'phone' => '081234567891',
+                'phone' => '082215042019',
                 'email_verified_at' => now(),
             ]
         );
@@ -46,7 +46,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Member Demo',
                 'password' => Hash::make('password'),
                 'role_id' => $memberRole->id,
-                'phone' => '081234567892',
+                'phone' => '082215042019',
                 'email_verified_at' => now(),
             ]
         );

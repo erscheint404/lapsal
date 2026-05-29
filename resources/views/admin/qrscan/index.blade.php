@@ -1,215 +1,178 @@
 @extends('layouts.admin')
 @section('title', 'QR Scanner')
-@section('page_title', 'Scanner Tiket Masuk')
+@section('page_title', 'Scanner Tiket')
+@section('page_description', 'Scan QR Code tiket member untuk verifikasi kehadiran.')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-dark-900 rounded-2xl shadow-xl overflow-hidden relative" x-data="qrScanner()">
-        <div class="p-4 bg-dark-950 text-white flex justify-between items-center z-10 relative">
-            <h3 class="font-bold"><i class="fas fa-camera mr-2"></i> Scan QR Code</h3>
-            <div class="flex gap-2">
-                <button @click="switchCamera" class="btn-icon text-white bg-dark-800 hover:bg-dark-700"><i class="fas fa-sync-alt"></i></button>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {{-- Scanner Area --}}
+    <div class="card-premium overflow-hidden border-2" style="border-color: rgba(204,255,0,0.3);">
+        <div class="p-6 text-center text-white relative overflow-hidden" style="background: linear-gradient(135deg, #0a1221, #0f1b2e);">
+            <div class="absolute inset-0 dot-pattern opacity-10"></div>
+            <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(204,255,0,0.15);"></div>
+            <div class="relative z-10">
+                <i class="fas fa-qrcode text-4xl mb-3" style="color: #ccff00;"></i>
+                <h3 class="text-xl font-bold tracking-tight mb-1">Arahkan Kamera ke QR Code</h3>
+                <p class="text-sm" style="color: rgba(255,255,255,0.7);">Pastikan kode berada di tengah kotak merah</p>
             </div>
         </div>
-        
-        <div class="relative aspect-[4/3] bg-black">
-            {{-- Camera Video Element --}}
-            <video id="qr-video" class="w-full h-full object-cover"></video>
+
+        <div class="p-4 bg-dark-900 relative">
+            <div id="reader" class="w-full mx-auto overflow-hidden rounded-2xl shadow-inner border border-dark-700 bg-black min-h-[300px]"></div>
             
-            {{-- Scanner Overlay Frame --}}
-            <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
-                <div class="w-64 h-64 border-2 border-emerald-500 rounded-xl relative shadow-[0_0_0_4000px_rgba(0,0,0,0.5)]">
-                    <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-emerald-400 rounded-tl-xl"></div>
-                    <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-emerald-400 rounded-tr-xl"></div>
-                    <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-emerald-400 rounded-bl-xl"></div>
-                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-emerald-400 rounded-br-xl"></div>
-                    
-                    {{-- Scanning Line Animation --}}
-                    <div class="absolute top-0 left-0 w-full h-1 bg-emerald-400 shadow-[0_0_10px_#34d399] animate-[scan_2s_linear_infinite]"></div>
+            {{-- Scanning effect overlay --}}
+            <div class="absolute top-4 left-4 right-4 bottom-4 pointer-events-none z-10 flex items-center justify-center">
+                <div class="w-48 h-48 border-2 border-dashed rounded-xl relative" style="border-color: rgba(204,255,0,0.5);">
+                    <div class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 rounded-tl-xl" style="border-color: #ccff00;"></div>
+                    <div class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 rounded-tr-xl" style="border-color: #ccff00;"></div>
+                    <div class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 rounded-bl-xl" style="border-color: #ccff00;"></div>
+                    <div class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 rounded-br-xl" style="border-color: #ccff00;"></div>
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-b from-transparent to-primary-500/50 animate-scan"></div>
                 </div>
             </div>
-            
-            <div x-show="loading" class="absolute inset-0 bg-dark-900/80 flex flex-col items-center justify-center text-emerald-400 z-20">
-                <i class="fas fa-circle-notch fa-spin text-4xl mb-4"></i>
-                <p class="font-bold tracking-widest">MEMVERIFIKASI TIKET...</p>
-            </div>
         </div>
-        
-        <div class="p-4 bg-dark-950 text-center text-dark-400 text-xs">
-            Arahkan kamera ke QR Code tiket member
+
+        <div class="p-6 bg-dark-50 border-t border-dark-100/60">
+            <form action="{{ route('admin.qrscan.process') }}" method="POST" id="qr-form" class="flex flex-col sm:flex-row gap-4">
+                @csrf
+                <div class="flex-1 relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-dark-400"><i class="fas fa-keyboard"></i></span>
+                    <input type="text" name="kode_booking" id="kode_booking" class="w-full py-3 pl-11 pr-4 text-sm bg-white border border-dark-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all shadow-sm font-mono uppercase font-bold" placeholder="Input kode manual (contoh: LPF-XXXXXXXX)" required>
+                </div>
+                <button type="submit" class="btn-primary py-3 px-6 shadow-lg shadow-primary-500/20 w-full sm:w-auto">
+                    <i class="fas fa-search mr-2"></i>Cek Tiket
+                </button>
+            </form>
         </div>
     </div>
 
-    {{-- Result Card --}}
-    <div id="result-container">
-        <div class="bg-white rounded-2xl border border-dark-100 shadow-sm p-8 flex flex-col items-center justify-center h-full text-center min-h-[400px]">
-            <div class="w-24 h-24 bg-dark-50 rounded-full flex items-center justify-center text-dark-200 text-4xl mb-4 border-2 border-dashed border-dark-200">
-                <i class="fas fa-qrcode"></i>
+    {{-- Result Area (if exists) --}}
+    @if(session('booking'))
+        @php $booking = session('booking'); @endphp
+        <div class="space-y-6 reveal-right">
+            <div class="card-premium p-8 relative overflow-hidden" style="border: 2px solid #ccff00; background: linear-gradient(135deg, white, #f8fafc);">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(204,255,0,0.15);"></div>
+                
+                <div class="flex items-center gap-4 mb-8 relative z-10 pb-6 border-b border-dark-100/60">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-lg" style="background: #ccff00; color: #0a1221;">
+                        <i class="fas fa-check-circle text-3xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-dark-900 tracking-tight leading-none mb-1">Tiket Valid</h3>
+                        <p class="font-mono font-bold text-dark-500 uppercase tracking-wider">{{ $booking->kode_booking }}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 relative z-10">
+                    <div>
+                        <p class="text-xs font-bold text-dark-400 uppercase tracking-wider mb-1">Pemesan</p>
+                        <div class="flex items-center gap-3">
+                            <img src="{{ $booking->user->avatar_url }}" class="w-10 h-10 rounded-full object-cover border border-dark-100 shadow-sm">
+                            <div>
+                                <p class="font-bold text-dark-900">{{ $booking->user->name }}</p>
+                                <p class="text-sm text-dark-500">{{ $booking->user->phone ?? '-' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-xs font-bold text-dark-400 uppercase tracking-wider mb-1">Lapangan & Waktu</p>
+                        <div class="bg-dark-50 p-4 rounded-xl border border-dark-100/60 shadow-inner">
+                            <p class="font-bold text-dark-900 text-lg mb-2">{{ $booking->lapangan->nama }}</p>
+                            <div class="grid grid-cols-2 gap-4 text-sm font-medium">
+                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-calendar-alt" style="color: #6e8f00;"></i> {{ $booking->tanggal->format('d M Y') }}</div>
+                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-clock" style="color: #6e8f00;"></i> {{ substr($booking->jam_mulai, 0, 5) }} - {{ substr($booking->jam_selesai, 0, 5) }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-dark-100/60 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-dark-400 uppercase tracking-wider mb-1">Status</p>
+                            <span class="badge" style="background: rgba(204,255,0,0.15); color: #526b00; border: 1px solid rgba(204,255,0,0.3);">{{ $booking->status_label }}</span>
+                        </div>
+                        
+                        @if($booking->status === 'confirmed')
+                        <form action="{{ route('admin.booking.update-status', $booking->id) }}" method="POST">
+                            @csrf @method('PATCH')
+                            <input type="hidden" name="status" value="completed">
+                            <button type="submit" class="btn-primary shadow-lg" onclick="return confirm('Tandai booking ini sebagai selesai?')">
+                                <i class="fas fa-flag-checkered mr-2"></i>Tandai Selesai
+                            </button>
+                        </form>
+                        @endif
+                    </div>
+                </div>
             </div>
-            <h3 class="font-bold text-xl text-dark-900 mb-2">Menunggu Scan</h3>
-            <p class="text-dark-500">Hasil verifikasi tiket akan muncul di sini.</p>
         </div>
-    </div>
+    @elseif(session('error_scan'))
+        <div class="card-premium p-10 text-center flex flex-col justify-center border-2 border-red-200 reveal-right">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 bg-red-100 text-red-500 shadow-inner">
+                <i class="fas fa-times-circle text-4xl"></i>
+            </div>
+            <h3 class="text-2xl font-black text-dark-900 tracking-tight mb-2">Tiket Tidak Valid</h3>
+            <p class="text-dark-600">{{ session('error_scan') }}</p>
+        </div>
+    @else
+        <div class="card-premium p-10 text-center flex flex-col justify-center border border-dashed border-dark-200 bg-dark-50/50 h-full">
+            <div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5" style="background: rgba(0,0,0,0.03); color: #627d9e;">
+                <i class="fas fa-ticket-alt text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-dark-900 mb-2">Menunggu Scan...</h3>
+            <p class="text-dark-500 text-sm">Hasil scan atau pencarian tiket akan muncul di sini.</p>
+        </div>
+    @endif
 </div>
 
 @push('scripts')
-<style>
-    @keyframes scan {
-        0% { top: 0; opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { top: 100%; opacity: 0; }
-    }
-</style>
-{{-- Using HTML5 QR Code Library --}}
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('qrScanner', () => ({
-        scanner: null,
-        loading: false,
-        cameras: [],
-        currentCameraIndex: 0,
-        
-        init() {
-            this.scanner = new Html5Qrcode("qr-video");
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fix standard CSS conflict for html5-qrcode
+        const style = document.createElement('style');
+        style.innerHTML = `
+            #reader { border: none !important; }
+            #reader video { object-fit: cover !important; border-radius: 1rem; }
+            #reader__dashboard_section_csr span { color: white !important; font-family: inherit !important; }
+            #reader__dashboard_section_csr button { background: #0f1b2e !important; color: white !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0.5rem !important; padding: 0.5rem 1rem !important; font-weight: 600 !important; cursor: pointer !important; }
+            #reader a { color: #ccff00 !important; text-decoration: none !important; }
+        `;
+        document.head.appendChild(style);
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: {width: 250, height: 250}, aspectRatio: 1.0 }, false);
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Stop scanning and submit form
+            html5QrcodeScanner.clear();
+            document.getElementById('kode_booking').value = decodedText;
             
-            Html5Qrcode.getCameras().then(devices => {
-                if (devices && devices.length) {
-                    this.cameras = devices;
-                    // Prefer back camera if available (usually index 1 on phones, but we'll try environment facing mode first)
-                    this.startScan({ facingMode: "environment" });
-                }
-            }).catch(err => {
-                alert("Tidak dapat mengakses kamera: " + err);
-            });
-        },
-        
-        startScan(config) {
-            this.scanner.start(
-                config, 
-                { fps: 10, qrbox: { width: 250, height: 250 } },
-                (decodedText, decodedResult) => {
-                    this.handleScan(decodedText);
-                },
-                (errorMessage) => {
-                    // Ignore background scan errors
-                }
-            );
-        },
-        
-        switchCamera() {
-            if (this.cameras.length > 1) {
-                this.scanner.stop().then(() => {
-                    this.currentCameraIndex = (this.currentCameraIndex + 1) % this.cameras.length;
-                    this.startScan(this.cameras[this.currentCameraIndex].id);
-                });
-            }
-        },
-        
-        handleScan(qrCodeData) {
-            if (this.loading) return; // Prevent multiple scans
+            // Show loading state on button
+            const submitBtn = document.querySelector('#qr-form button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...';
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
             
-            this.loading = true;
-            this.scanner.pause(true); // Pause scanning
-            
-            // Call API backend to validate
-            fetch('{{ route("api.admin.qrvalidate") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ qr_data: qrCodeData })
-            })
-            .then(response => response.json())
-            .then(data => {
-                this.renderResult(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                this.renderError();
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    this.loading = false;
-                    this.scanner.resume(); // Resume after 3 seconds
-                }, 3000);
-            });
-        },
-        
-        renderResult(data) {
-            const container = document.getElementById('result-container');
-            
-            if (data.valid) {
-                const booking = data.booking;
-                container.innerHTML = `
-                    <div class="bg-emerald-50 rounded-2xl border border-emerald-200 shadow-sm p-6 h-full flex flex-col">
-                        <div class="text-center mb-6">
-                            <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center text-white text-4xl mx-auto mb-4 shadow-lg shadow-emerald-500/30">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <h3 class="font-black text-2xl text-emerald-800 mb-1">TIKET VALID</h3>
-                            <p class="font-mono font-bold text-emerald-600 bg-emerald-100 py-1 px-3 rounded inline-block">${booking.kode_booking}</p>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl p-5 shadow-sm space-y-4 flex-1">
-                            <div>
-                                <p class="text-xs font-bold text-dark-400 uppercase">Penyewa</p>
-                                <p class="font-bold text-dark-900 text-lg">${booking.user_name}</p>
-                            </div>
-                            <div>
-                                <p class="text-xs font-bold text-dark-400 uppercase">Lapangan</p>
-                                <p class="font-bold text-primary-700 text-lg">${booking.lapangan_nama}</p>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-xs font-bold text-dark-400 uppercase">Tanggal</p>
-                                    <p class="font-bold text-dark-900">${booking.tanggal}</p>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-bold text-dark-400 uppercase">Waktu</p>
-                                    <p class="font-bold text-dark-900">${booking.jam_mulai} - ${booking.jam_selesai}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <a href="/admin/booking/${booking.id}" class="btn-primary bg-emerald-500 hover:bg-emerald-600 border-none w-full mt-4 text-center">Lihat Detail Booking</a>
-                    </div>
-                `;
-                
-                // Play success sound
-                new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3').play().catch(e => {});
-            } else {
-                container.innerHTML = `
-                    <div class="bg-red-50 rounded-2xl border border-red-200 shadow-sm p-8 flex flex-col items-center justify-center h-full text-center">
-                        <div class="w-24 h-24 bg-red-500 rounded-full flex items-center justify-center text-white text-5xl mb-6 shadow-lg shadow-red-500/30">
-                            <i class="fas fa-times"></i>
-                        </div>
-                        <h3 class="font-black text-2xl text-red-800 mb-2">TIKET TIDAK VALID</h3>
-                        <p class="text-red-600 font-medium">${data.message}</p>
-                        
-                        <button onclick="document.getElementById('result-container').innerHTML = '<div class=\\'bg-white rounded-2xl border border-dark-100 shadow-sm p-8 flex flex-col items-center justify-center h-full text-center min-h-[400px]\\'><div class=\\'w-24 h-24 bg-dark-50 rounded-full flex items-center justify-center text-dark-200 text-4xl mb-4 border-2 border-dashed border-dark-200\\'><i class=\\'fas fa-qrcode\\'></i></div><h3 class=\\'font-bold text-xl text-dark-900 mb-2\\'>Menunggu Scan</h3><p class=\\'text-dark-500\\'>Hasil verifikasi tiket akan muncul di sini.</p></div>'" class="btn-secondary mt-8 w-full border-red-200 text-red-600 hover:bg-red-100">Scan Ulang</button>
-                    </div>
-                `;
-                
-                // Play error sound
-                new Audio('https://www.soundjay.com/buttons/sounds/button-10.mp3').play().catch(e => {});
-            }
-        },
-        
-        renderError() {
-            document.getElementById('result-container').innerHTML = `
-                <div class="bg-red-50 rounded-2xl border border-red-200 shadow-sm p-8 flex flex-col items-center justify-center h-full text-center">
-                    <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4"></i>
-                    <h3 class="font-bold text-xl text-red-800 mb-2">Error Server</h3>
-                    <p class="text-red-600">Terjadi kesalahan saat memverifikasi QR Code.</p>
-                </div>
-            `;
+            document.getElementById('qr-form').submit();
         }
-    }));
-});
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // console.warn(`Code scan error = ${error}`);
+        }
+
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    });
 </script>
+
+<style>
+    @keyframes scan {
+        0% { transform: translateY(-100%); }
+        50% { transform: translateY(240px); }
+        100% { transform: translateY(-100%); }
+    }
+    .animate-scan {
+        animation: scan 3s linear infinite;
+    }
+</style>
 @endpush
 @endsection

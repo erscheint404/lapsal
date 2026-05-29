@@ -90,4 +90,37 @@ class SlotWaktuController extends Controller
 
         return back()->with('success', 'Slot berhasil diperbarui.');
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
+            'lapangan_id' => 'nullable|exists:lapangan,id',
+            'tanggal' => 'nullable|date',
+        ]);
+
+        $lapanganId = $request->get('lapangan_id') ?: Lapangan::aktif()->first()?->id;
+        $tanggal = $request->get('tanggal') ?: today()->format('Y-m-d');
+
+        if (!$lapanganId) {
+            return back()->with('error', 'Tidak ada lapangan aktif.');
+        }
+
+        SlotWaktu::create([
+            'lapangan_id' => $lapanganId,
+            'tanggal' => $tanggal,
+            'jam_mulai' => $request->jam_mulai . ':00',
+            'jam_selesai' => $request->jam_selesai . ':00',
+            'status' => 'available',
+        ]);
+
+        return back()->with('success', 'Slot waktu berhasil ditambahkan.');
+    }
+
+    public function destroy(SlotWaktu $slot)
+    {
+        $slot->delete();
+        return back()->with('success', 'Slot waktu berhasil dihapus.');
+    }
 }

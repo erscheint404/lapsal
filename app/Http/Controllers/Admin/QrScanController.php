@@ -44,4 +44,23 @@ class QrScanController extends Controller
             ],
         ]);
     }
+
+    public function process(Request $request)
+    {
+        $request->validate(['kode_booking' => 'required|string']);
+
+        $booking = Booking::where('kode_booking', $request->kode_booking)
+            ->with(['user', 'lapangan'])
+            ->first();
+
+        if (!$booking) {
+            return back()
+                ->with('error_scan', 'Kode booking tidak ditemukan atau tidak valid.')
+                ->with('error', 'Tiket Tidak Valid atau tidak ditemukan.');
+        }
+
+        return back()
+            ->with('booking', $booking)
+            ->with('success', 'Tiket Valid! Data booking berhasil dimuat.');
+    }
 }

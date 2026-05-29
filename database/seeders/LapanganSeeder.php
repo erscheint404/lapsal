@@ -61,8 +61,8 @@ class LapanganSeeder extends Seeder
         $settings = [
             ['key' => 'nama_website', 'value' => 'Lapsal Futsal', 'group' => 'general'],
             ['key' => 'alamat', 'value' => 'Jl. Olahraga No. 10, Jakarta Selatan', 'group' => 'general'],
-            ['key' => 'telepon', 'value' => '021-12345678', 'group' => 'general'],
-            ['key' => 'whatsapp', 'value' => '6281234567890', 'group' => 'general'],
+            ['key' => 'telepon', 'value' => '082215042019', 'group' => 'general'],
+            ['key' => 'whatsapp', 'value' => '6282215042019', 'group' => 'general'],
             ['key' => 'email', 'value' => 'info@lapsal-futsal.com', 'group' => 'general'],
             ['key' => 'jam_buka', 'value' => '08:00', 'group' => 'operasional'],
             ['key' => 'jam_tutup', 'value' => '23:00', 'group' => 'operasional'],
@@ -76,7 +76,7 @@ class LapanganSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Pengaturan::firstOrCreate(['key' => $setting['key']], $setting);
+            Pengaturan::updateOrCreate(['key' => $setting['key']], $setting);
         }
     }
 
