@@ -2,48 +2,38 @@
 
 @section('content')
 {{-- ============================================
-     HERO SECTION — Full-screen dark hero
+     HERO — Live Dashboard Style
      ============================================ --}}
-<section class="relative min-h-screen flex items-center overflow-hidden bg-mesh-dark">
-    {{-- Animated decorative elements --}}
-    <div class="absolute inset-0 dot-pattern opacity-30"></div>
-    <div class="absolute top-20 left-[10%] w-2 h-2 rounded-full animate-float" style="background: #ccff00; box-shadow: 0 0 20px rgba(204,255,0,0.4); animation-delay: 0s;"></div>
-    <div class="absolute top-40 right-[15%] w-1.5 h-1.5 rounded-full animate-float" style="background: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.4); animation-delay: 1s;"></div>
-    <div class="absolute bottom-32 left-[20%] w-1 h-1 rounded-full animate-float" style="background: #ccff00; box-shadow: 0 0 10px rgba(204,255,0,0.3); animation-delay: 2s;"></div>
-    <div class="absolute top-[60%] right-[8%] w-1.5 h-1.5 rounded-full animate-float-slow" style="background: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.3); animation-delay: 0.5s;"></div>
-    <div class="absolute bottom-[20%] right-[30%] w-1 h-1 rounded-full animate-float" style="background: #ccff00; box-shadow: 0 0 10px rgba(204,255,0,0.3); animation-delay: 3s;"></div>
+<section class="relative min-h-[100dvh] flex items-center overflow-hidden bg-gradient-dark">
+    <div class="absolute inset-0 dot-pattern opacity-10"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
-    {{-- Large glow orbs --}}
-    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[180px]" style="background: rgba(204,255,0,0.06);"></div>
-    <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] rounded-full blur-[180px]" style="background: rgba(0,229,255,0.05);"></div>
-
-    <div class="container-custom relative z-10 pt-32 pb-20">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-            {{-- Text Content --}}
-            <div class="max-w-2xl" x-data="{ show: false }" x-init="setTimeout(() => show = true, 100)">
-                {{-- Live badge --}}
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm mb-8 transition-all duration-700 transform"
-                     style="background: rgba(204,255,0,0.1); border: 1px solid rgba(204,255,0,0.2); color: #ccff00;"
-                     :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    <span class="relative flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style="background: #ccff00;"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5" style="background: #ccff00;"></span>
+    <div class="container-custom relative z-10 pt-32 pb-20 w-full">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+            {{-- Left: Headline + CTA --}}
+            <div class="lg:col-span-7 max-w-2xl" x-data="{ show: false }" x-init="setTimeout(() => show = true, 50)">
+                <div class="flex items-center gap-3 px-4 py-2 rounded-full text-sm font-semibold mb-8 w-fit transition-all duration-700"
+                     style="background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.2); color: #6ee7b7;"
+                     :class="show ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style="background: #10b981;"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2" style="background: #10b981;"></span>
                     </span>
-                    {{ $slotTersedia }} Slot Tersedia Hari Ini
+                    <span class="font-mono font-bold">{{ $slotTersedia }}</span> slot tersedia hari ini
                 </div>
 
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-display font-black text-white leading-[1.05] mb-8 transition-all duration-700 delay-100 transform tracking-tight"
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-white leading-[1.05] tracking-tight transition-all duration-700 delay-100"
                     :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    Main Futsal<br>Makin
-                    <span class="text-gradient-premium">Gampang</span>
+                    Main Futsal,<br>
+                    <span class="text-gradient-premium">Makin Gampang</span>
                 </h1>
 
-                <p class="text-lg md:text-xl text-dark-300 mb-10 leading-relaxed max-w-xl transition-all duration-700 delay-200 transform"
+                <p class="text-lg text-secondary-300 mt-6 max-w-lg leading-relaxed transition-all duration-700 delay-200"
                    :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    Cek jadwal, booking lapangan, dan bayar secara online dalam hitungan menit. Jangan biarkan tim lawan mengambil jadwalmu!
+                    Cek jadwal, booking lapangan, bayar online. Cuma perlu 2 menit.
                 </p>
 
-                <div class="flex flex-wrap gap-4 transition-all duration-700 delay-300 transform"
+                <div class="flex flex-wrap gap-4 mt-10 transition-all duration-700 delay-300"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
                     <a href="{{ route('lapangan.index') }}" class="btn-primary text-lg px-10 py-5">
                         <i class="fas fa-search mr-2"></i> Cari Lapangan
@@ -53,190 +43,166 @@
                     </a>
                 </div>
 
-                {{-- Stats strip --}}
-                <div class="grid grid-cols-3 gap-8 mt-14 pt-10 transition-all duration-700 delay-400 transform"
-                     style="border-top: 1px solid rgba(255,255,255,0.08);"
+                <div class="flex items-center gap-8 mt-14 pt-8 transition-all duration-700 delay-400"
+                     style="border-top: 1px solid rgba(255,255,255,0.06);"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
                     <div>
-                        <p class="text-4xl font-display font-black text-white mb-1.5" data-count="{{ $totalMember }}">0</p>
-                        <p class="text-sm font-semibold text-dark-400">Member Aktif</p>
+                        <p class="text-3xl font-display font-black text-white" data-count="{{ $totalMember }}">0</p>
+                        <p class="text-xs font-semibold text-secondary-400 mt-1">Member Aktif</p>
                     </div>
+                    <div class="w-px h-10" style="background: rgba(255,255,255,0.08);"></div>
                     <div>
-                        <p class="text-4xl font-display font-black text-white mb-1.5" data-count="{{ $totalBooking }}">0</p>
-                        <p class="text-sm font-semibold text-dark-400">Total Booking</p>
+                        <p class="text-3xl font-display font-black text-white" data-count="{{ $totalBooking }}">0</p>
+                        <p class="text-xs font-semibold text-secondary-400 mt-1">Total Booking</p>
                     </div>
+                    <div class="w-px h-10" style="background: rgba(255,255,255,0.08);"></div>
                     <div>
-                        <p class="text-4xl font-display font-black text-white mb-1.5 flex items-center">
-                            {{ $rataRating }} <i class="fas fa-star ml-2 text-2xl" style="color: #ccff00;"></i>
+                        <p class="text-3xl font-display font-black text-white flex items-center gap-1">
+                            {{ $rataRating }} <i class="fas fa-star text-sm" style="color: #10b981;"></i>
                         </p>
-                        <p class="text-sm font-semibold text-dark-400">Rating Rata-rata</p>
+                        <p class="text-xs font-semibold text-secondary-400 mt-1">Rating</p>
                     </div>
                 </div>
             </div>
 
-            {{-- Hero Image --}}
-            <div class="hidden lg:block relative h-[620px]" x-data="{ show: false }" x-init="setTimeout(() => show = true, 300)">
-                <div class="absolute -inset-4 rounded-[3.5rem] transform rotate-3 blur-xl transition-all duration-1000"
-                     style="background: linear-gradient(135deg, rgba(204,255,0,0.15) 0%, rgba(0,229,255,0.15) 100%);"
-                     :class="show ? 'scale-100 opacity-100' : 'scale-95 opacity-0'"></div>
-                <div class="relative h-full rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-1000 delay-100"
-                     style="border: 1px solid rgba(255,255,255,0.1);"
-                     :class="show ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'">
-                    <img src="{{ asset('images/hero_futsal_court.png') }}"
-                         alt="Futsal Court" class="w-full h-full object-cover">
-                    <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(10,18,33,0.9) 0%, rgba(10,18,33,0.3) 40%, transparent 100%);"></div>
-
-                    {{-- Floating booking card --}}
-                    <div class="absolute bottom-8 left-8 right-8 p-6 rounded-2xl" style="background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #ccff00, #a3cc00);">
-                                <i class="fas fa-check text-dark-950 text-lg"></i>
-                            </div>
-                            <div class="text-white">
-                                <p class="font-bold text-lg">Booking Dikonfirmasi</p>
-                                <p class="text-sm text-white/60">Lapangan Vinyl A — 19:00 WIB</p>
-                            </div>
+            {{-- Right: Live Availability Card --}}
+            <div class="lg:col-span-5 transition-all duration-700 delay-300"
+                 :class="show ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'">
+                <div class="rounded-2xl border overflow-hidden" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
+                    {{-- Card header --}}
+                    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <div class="flex items-center gap-2 text-sm font-semibold text-white">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Live — Slot Hari Ini
                         </div>
-                        <div class="w-full h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.1);">
-                            <div class="h-full w-3/4 rounded-full relative overflow-hidden" style="background: #ccff00;">
-                                <div class="absolute inset-0 animate-shimmer"></div>
-                            </div>
-                        </div>
+                        <a href="{{ route('lapangan.index') }}" class="text-xs font-semibold" style="color: #34d399;">Lihat semua →</a>
                     </div>
-                </div>
 
-                {{-- Floating rating badge --}}
-                <div class="absolute top-20 -right-4 w-24 h-24 rounded-3xl flex items-center justify-center animate-float shadow-xl"
-                     style="background: rgba(10,18,33,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(204,255,0,0.2); animation-delay: 0.5s;">
-                    <div class="text-center">
-                        <i class="fas fa-star text-2xl" style="color: #ccff00;"></i>
-                        <p class="text-sm font-black text-white mt-1">4.9/5.0</p>
+                    {{-- Slot list --}}
+                    <div class="p-5 space-y-3 max-h-[320px] overflow-y-auto custom-scrollbar">
+                        @forelse($slotHariIni->take(5) as $slot)
+                        <a href="{{ route('lapangan.show', $slot->lapangan_id) }}" class="flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group"
+                           style="background: rgba(255,255,255,0.03);"
+                           onmouseover="this.style.background='rgba(16,185,129,0.08)'"
+                           onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-white text-sm truncate">{{ $slot->lapangan->nama ?? 'Lapangan' }}</p>
+                                <p class="text-xs text-secondary-400 mt-0.5">
+                                    {{ substr($slot->jam_mulai, 0, 5) }} - {{ substr($slot->jam_selesai, 0, 5) }} WIB
+                                </p>
+                            </div>
+                            <span class="px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap"
+                                  style="background: rgba(16,185,129,0.15); color: #34d399;">
+                                Rp{{ number_format($slot->harga ?? 0, 0, ',', '.') }}
+                            </span>
+                        </a>
+                        @empty
+                        <p class="text-center text-secondary-400 text-sm py-8">Semua slot terisi hari ini.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- Bottom gradient fade --}}
-    <div class="absolute bottom-0 left-0 right-0 h-32" style="background: linear-gradient(to top, #ffffff, transparent);"></div>
 </section>
 
 {{-- ============================================
-     LAPANGAN TERPOPULER
+     LAPANGAN — Asymmetric Gallery
      ============================================ --}}
-<section class="py-24 bg-white relative">
+<section class="py-24 bg-gradient-to-b from-secondary-50 to-white relative overflow-hidden">
     <div class="container-custom">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal">
-            <div class="max-w-2xl">
-                <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #8ab300;">Pilihan Terbaik</span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-dark-900 tracking-tight mb-4">Pilihan Lapangan</h2>
-                <p class="text-dark-500 text-lg leading-relaxed">Berbagai jenis lapangan futsal dengan standar internasional menanti Anda.</p>
+        <div class="flex items-end justify-between gap-6 mb-12 reveal">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">PILIHAN TERBAIK</span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Pilihan Lapangan</h2>
             </div>
-            <a href="{{ route('lapangan.index') }}" class="btn-secondary whitespace-nowrap">
+            <a href="{{ route('lapangan.index') }}" class="btn-secondary text-sm shrink-0 hidden sm:inline-flex">
                 Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            @forelse($lapangan as $l)
-            <a href="{{ route('lapangan.show', $l->id) }}" class="group block h-full reveal" style="transition-delay: {{ $loop->index * 100 }}ms;">
-                <div class="bg-white rounded-3xl border border-dark-100/40 overflow-hidden flex flex-col transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 h-full"
-                     style="hover-border-color: rgba(204,255,0,0.3);">
-                    <div class="relative h-52 overflow-hidden">
+        @if($lapangan->count() > 0)
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            @foreach($lapangan as $l)
+            <a href="{{ route('lapangan.show', $l->id) }}" class="group block reveal" style="transition-delay: {{ $loop->index * 80 }}ms;">
+                <div class="bg-white rounded-2xl border border-secondary-200/40 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+                    <div class="aspect-[4/3] overflow-hidden bg-secondary-100">
                         @if($l->foto_utama)
-                        <img src="{{ Storage::url($l->foto_utama) }}" alt="{{ $l->nama }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <img src="{{ Storage::url($l->foto_utama) }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         @else
-                        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #1a2740, #0f1b2e);">
-                            <i class="fas fa-futbol text-4xl text-dark-600"></i>
-                        </div>
-                        @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950/40 to-transparent"></div>
-                        <div class="absolute top-4 left-4">
-                            <span class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm"
-                                  style="background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); color: #263750;">
-                                {{ ucfirst(str_replace('_', ' ', $l->tipe)) }}
-                            </span>
-                        </div>
-                        @if($l->diskon)
-                        <div class="absolute top-4 right-4">
-                            <span class="inline-flex items-center px-2.5 py-1.5 rounded-xl text-dark-950 text-xs font-bold shadow-lg" style="background: #ccff00;">DISKON</span>
-                        </div>
+                        <div class="w-full h-full flex items-center justify-center"><i class="fas fa-futbol text-3xl text-secondary-300"></i></div>
                         @endif
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <h3 class="font-display font-bold text-xl text-dark-900 line-clamp-1">{{ $l->nama }}</h3>
-                            <div class="flex items-center gap-1 text-sm font-bold px-2.5 py-1 rounded-xl shrink-0" style="background: rgba(204,255,0,0.1); color: #6e8f00;">
-                                <i class="fas fa-star text-xs" style="color: #a3cc00;"></i>
-                                <span>{{ $l->rata_rating }}</span>
+                    <div class="flex-1 p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between gap-2 mb-1">
+                                <h3 class="font-bold text-secondary-900 line-clamp-1">{{ $l->nama }}</h3>
+                                <span class="flex items-center gap-1 text-xs font-bold whitespace-nowrap" style="color: #059669;">
+                                    <i class="fas fa-star" style="color: #10b981;"></i> {{ $l->rata_rating }}
+                                </span>
                             </div>
+                            <p class="text-xs text-secondary-500">{{ ucfirst(str_replace('_', ' ', $l->tipe)) }}</p>
                         </div>
-                        <p class="text-sm text-dark-500 line-clamp-2 mb-4 leading-relaxed">{{ $l->deskripsi ?? 'Tidak ada deskripsi' }}</p>
-
-                        <div class="mt-auto pt-5 flex items-center justify-between" style="border-top: 1px solid rgba(0,0,0,0.06);">
-                            <div>
-                                <p class="text-[10px] text-dark-400 font-bold uppercase tracking-widest mb-1">Harga per Jam</p>
-                                <p class="font-black text-2xl font-display tracking-tight" style="color: #6e8f00;">Rp {{ number_format($l->harga_per_jam, 0, ',', '.') }}</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                                 style="background: rgba(204,255,0,0.1); color: #6e8f00;"
-                                 onmouseover="this.style.background='#ccff00';this.style.color='#0a1221'"
-                                 onmouseout="this.style.background='rgba(204,255,0,0.1)';this.style.color='#6e8f00'">
-                                <i class="fas fa-arrow-right"></i>
-                            </div>
+                        <div class="flex items-center justify-between mt-4 pt-4" style="border-top: 1px solid rgba(0,0,0,0.04);">
+                            <p class="font-bold font-mono text-lg" style="color: #059669;">Rp{{ number_format($l->harga_per_jam, 0, ',', '.') }}<span class="text-xs font-normal text-secondary-400">/jam</span></p>
+                            <span class="text-sm font-bold transition-all group-hover:translate-x-1" style="color: #10b981;">Pesan <i class="fas fa-chevron-right ml-1 text-xs"></i></span>
                         </div>
                     </div>
                 </div>
             </a>
-            @empty
-            <div class="col-span-full">
-                <div class="empty-state">
-                    <div class="empty-state-icon">
-                        <i class="fas fa-futbol"></i>
-                    </div>
-                    <h3>Belum Ada Lapangan</h3>
-                    <p>Belum ada lapangan yang aktif saat ini.</p>
-                </div>
-            </div>
-            @endforelse
+            @endforeach
+        </div>
+        @endif
+
+        <div class="text-center mt-8 sm:hidden reveal">
+            <a href="{{ route('lapangan.index') }}" class="btn-primary">Lihat Semua Lapangan</a>
         </div>
     </div>
 </section>
 
 {{-- ============================================
-     CARA KERJA
+     CARA KERJA — Zig-zag Timeline
      ============================================ --}}
-<section id="cara-kerja" class="section-dark py-28">
-    <div class="absolute inset-0 dot-pattern"></div>
-    <div class="absolute -top-40 left-1/3 w-80 h-80 rounded-full blur-[150px]" style="background: rgba(204,255,0,0.05);"></div>
+<section id="cara-kerja" class="section-dark py-28 relative overflow-hidden">
+    <div class="absolute inset-0 dot-pattern opacity-20"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
     <div class="container-custom relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-            <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #ccff00;">Mudah & Cepat</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mb-4">Cara Booking Mudah</h2>
-            <p class="text-dark-300 text-lg leading-relaxed">Hanya butuh 4 langkah sederhana untuk mengamankan jadwal main futsalmu.</p>
+        <div class="text-center max-w-2xl mx-auto mb-20 reveal">
+            <span class="text-xs font-bold uppercase tracking-widest" style="color: #34d399;">CARA KERJA</span>
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mt-2">Booking dalam 4 Langkah</h2>
+            <p class="text-secondary-400 mt-3">Dari cari lapangan sampai main, semuanya online.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            {{-- Connection line removed per user request --}}
+        @php
+        $steps = [
+            ['icon' => 'fa-search', 'title' => 'Cari Lapangan', 'desc' => 'Pilih lapangan yang cocok dari berbagai tipe dan harga. Filter berdasarkan jadwal dan fasilitas.'],
+            ['icon' => 'fa-calendar-alt', 'title' => 'Pilih Jadwal', 'desc' => 'Lihat ketersediaan slot secara real-time. Pilih tanggal dan jam yang kamu mau.'],
+            ['icon' => 'fa-credit-card', 'title' => 'Bayar Online', 'desc' => 'Selesaikan pembayaran via transfer bank, e-wallet, atau QRIS. Aman dan cepat.'],
+            ['icon' => 'fa-qrcode', 'title' => 'Tunjuk QR, Main!', 'desc' => 'QR Code tiket dikirim otomatis. Tunjukkan ke petugas, langsung main.'],
+        ];
+        @endphp
 
-            @php
-            $steps = [
-                ['icon' => 'fa-search', 'title' => '1. Pilih Lapangan', 'desc' => 'Cari dan pilih lapangan yang sesuai dengan kebutuhan timmu.', 'color' => '#ccff00'],
-                ['icon' => 'fa-calendar-alt', 'title' => '2. Pilih Jadwal', 'desc' => 'Tentukan tanggal dan pilih slot waktu yang masih tersedia.', 'color' => '#00e5ff'],
-                ['icon' => 'fa-credit-card', 'title' => '3. Bayar', 'desc' => 'Selesaikan pembayaran via transfer bank, e-wallet, atau manual.', 'color' => '#ccff00'],
-                ['icon' => 'fa-qrcode', 'title' => '4. Main!', 'desc' => 'Tunjukkan QR Code booking kepada petugas di lokasi lapangan.', 'color' => '#00e5ff'],
-            ];
-            @endphp
+        <div class="max-w-3xl mx-auto space-y-12 relative">
+            {{-- Vertical line --}}
+            <div class="absolute left-8 top-0 bottom-0 w-px hidden md:block" style="background: linear-gradient(180deg, rgba(16,185,129,0.4), rgba(16,185,129,0.1), transparent);"></div>
 
             @foreach($steps as $i => $step)
-            <div class="relative z-10 text-center group reveal" style="transition-delay: {{ $i * 150 }}ms;">
-                <div class="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center text-3xl mb-6 transition-all duration-500 group-hover:-translate-y-2"
-                     style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: {{ $step['color'] }};">
-                    <i class="fas {{ $step['icon'] }}"></i>
+            <div class="relative flex flex-col md:flex-row items-start gap-8 md:gap-12 reveal" style="transition-delay: {{ $i * 100 }}ms;">
+                {{-- Number + Icon --}}
+                <div class="flex md:flex-col items-center gap-4 md:items-center shrink-0">
+                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black relative z-10 shadow-lg"
+                         style="background: linear-gradient(135deg, #10b981, #059669); color: white;">
+                        <i class="fas {{ $step['icon'] }}"></i>
+                    </div>
+                    <span class="text-sm font-bold font-mono" style="color: #34d399;">0{{ $i + 1 }}</span>
                 </div>
-                <h4 class="font-bold text-xl text-white mb-3">{{ $step['title'] }}</h4>
-                <p class="text-dark-400 text-sm leading-relaxed max-w-[220px] mx-auto">{{ $step['desc'] }}</p>
+
+                {{-- Content --}}
+                <div class="flex-1 pb-4 md:pb-8" style="{{ $i < count($steps) - 1 ? 'border-bottom: 1px solid rgba(255,255,255,0.04);' : '' }}">
+                    <h3 class="text-xl font-bold text-white mb-2">{{ $step['title'] }}</h3>
+                    <p class="text-secondary-400 leading-relaxed max-w-lg">{{ $step['desc'] }}</p>
+                </div>
             </div>
             @endforeach
         </div>
@@ -244,97 +210,131 @@
 </section>
 
 {{-- ============================================
-     KEUNGGULAN TEMPAT (NEW)
+     KEUNGGULAN — Split Category Cards
      ============================================ --}}
 <section class="py-24 bg-white relative overflow-hidden">
-    <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-[150px]" style="background: rgba(204,255,0,0.06);"></div>
-
-    <div class="container-custom relative z-10">
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-            <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #8ab300;">Fasilitas Premium</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-dark-900 tracking-tight mb-4">Kenapa Memilih Kami?</h2>
-            <p class="text-dark-500 text-lg leading-relaxed">Kami menyediakan fasilitas terbaik untuk pengalaman bermain futsal yang tak terlupakan.</p>
+    <div class="container-custom">
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+            <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">FASILITAS</span>
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Kenapa Pilih Kami?</h2>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            @php
-            $keunggulan = [
-                ['icon' => 'fa-futbol', 'title' => 'Lapangan Terawat', 'desc' => 'Standar internasional'],
-                ['icon' => 'fa-lightbulb', 'title' => 'Pencahayaan', 'desc' => 'LED terang merata'],
-                ['icon' => 'fa-car', 'title' => 'Parkir Luas', 'desc' => 'Area parkir aman'],
-                ['icon' => 'fa-restroom', 'title' => 'Toilet Bersih', 'desc' => 'Selalu terjaga'],
-                ['icon' => 'fa-mosque', 'title' => 'Musala', 'desc' => 'Tempat ibadah nyaman'],
-                ['icon' => 'fa-shield-alt', 'title' => 'Keamanan', 'desc' => 'CCTV 24 jam'],
-            ];
-            @endphp
+        @php
+        $lapanganItems = [
+            ['icon' => 'fa-futbol', 'title' => 'Lapangan Standar', 'desc' => 'Ukuran internasional, nyaman buat 5v5 atau 6v6.'],
+            ['icon' => 'fa-lightbulb', 'title' => 'Pencahayaan LED', 'desc' => 'Terang merata tanpa bayangan. Cocok main malam hari.'],
+            ['icon' => 'fa-wind', 'title' => 'Sirkulasi Udara', 'desc' => 'Ventilasi terbuka lebar, ngga pengap.'],
+        ];
+        $pendukungItems = [
+            ['icon' => 'fa-car', 'title' => 'Parkir Luas & Aman', 'desc' => 'Area parkir cukup luas untuk motor dan mobil.'],
+            ['icon' => 'fa-restroom', 'title' => 'Toilet & Ganti Baju', 'desc' => 'Bersih, terawat, dan ada tempat bilas.'],
+            ['icon' => 'fa-mosque', 'title' => 'Musala', 'desc' => 'Tempat ibadah nyaman untuk salat.'],
+            ['icon' => 'fa-shield-alt', 'title' => 'CCTV 24 Jam', 'desc' => 'Pantau terus, barang aman.'],
+        ];
+        @endphp
 
-            @foreach($keunggulan as $i => $item)
-            <div class="reveal text-center p-6 rounded-2xl border border-dark-100/40 hover:border-primary-300/40 transition-all duration-300 hover:-translate-y-1 group" style="transition-delay: {{ $i * 80 }}ms;">
-                <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 text-xl"
-                     style="background: rgba(204,255,0,0.08); color: #6e8f00;">
-                    <i class="fas {{ $item['icon'] }}"></i>
+        <div class="grid md:grid-cols-2 gap-6">
+            {{-- Lapangan card --}}
+            <div class="rounded-2xl p-8 reveal" style="background: linear-gradient(135deg, #f0fdf4, #ffffff); border: 1px solid rgba(16,185,129,0.15);">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: rgba(16,185,129,0.1);">
+                        <i class="fas fa-futbol" style="color: #10b981;"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-secondary-900">Fasilitas Lapangan</h3>
                 </div>
-                <h4 class="font-bold text-dark-900 text-sm mb-1">{{ $item['title'] }}</h4>
-                <p class="text-xs text-dark-500">{{ $item['desc'] }}</p>
+                <div class="space-y-4">
+                    @foreach($lapanganItems as $item)
+                    <div class="flex gap-4">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: rgba(16,185,129,0.06);">
+                            <i class="fas {{ $item['icon'] }} text-sm" style="color: #10b981;"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-secondary-900 text-sm">{{ $item['title'] }}</p>
+                            <p class="text-xs text-secondary-500 mt-0.5">{{ $item['desc'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
+
+            {{-- Pendukung card --}}
+            <div class="rounded-2xl p-8 reveal" style="transition-delay: 100ms; background: linear-gradient(135deg, #f8fafc, #ffffff); border: 1px solid rgba(0,0,0,0.06);">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: rgba(16,185,129,0.1);">
+                        <i class="fas fa-building" style="color: #10b981;"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-secondary-900">Fasilitas Pendukung</h3>
+                </div>
+                <div class="space-y-4">
+                    @foreach($pendukungItems as $item)
+                    <div class="flex gap-4">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: rgba(16,185,129,0.06);">
+                            <i class="fas {{ $item['icon'] }} text-sm" style="color: #10b981;"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-secondary-900 text-sm">{{ $item['title'] }}</p>
+                            <p class="text-xs text-secondary-500 mt-0.5">{{ $item['desc'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 {{-- ============================================
-     LEADERBOARD PREVIEW
+     LEADERBOARD — Scoreboard Style
      ============================================ --}}
-<section class="section-dark py-28 relative">
-    <div class="absolute inset-0 grid-pattern"></div>
-    <div class="absolute -top-60 -right-60 w-[500px] h-[500px] rounded-full blur-[180px]" style="background: rgba(204,255,0,0.05);"></div>
-    <div class="absolute -bottom-60 -left-60 w-[500px] h-[500px] rounded-full blur-[180px]" style="background: rgba(0,229,255,0.04);"></div>
+<section class="section-dark py-28 relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern opacity-20"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
     <div class="container-custom relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-16">
-            <div class="lg:w-1/2 max-w-xl reveal-left">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm mb-8"
-                     style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #ccff00;">
-                    <i class="fas fa-fire"></i> Hall of Fame
+        <div class="grid lg:grid-cols-5 gap-12 items-center">
+            <div class="lg:col-span-2 reveal-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold mb-6"
+                     style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.15); color: #34d399;">
+                    <i class="fas fa-trophy"></i> LEADERBOARD
                 </div>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.1] mb-6 tracking-tight">Jadilah Pencetak Gol Terbanyak!</h2>
-                <p class="text-dark-300 text-lg mb-10 leading-relaxed">
-                    Setiap gol yang kamu cetak dalam sesi booking akan tercatat di sistem kami. Bersainglah dengan pemain lain dan raih posisi teratas.
-                </p>
-                <a href="{{ route('leaderboard.index') }}" class="btn-primary text-lg px-10 py-5">
-                    Lihat Leaderboard <i class="fas fa-trophy ml-2"></i>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-white leading-[1.1] tracking-tight">Pencetak Gol<br>Terbanyak</h2>
+                <p class="text-secondary-400 mt-4 leading-relaxed">Setiap gol yang kamu cetak tercatat. Naikkan peringkatmu dan jadi yang terbaik.</p>
+                <a href="{{ route('leaderboard.index') }}" class="btn-outline-light mt-8 inline-flex text-sm px-6 py-3">
+                    Lihat Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
 
-            <div class="lg:w-1/2 w-full max-w-lg reveal-right">
-                <div class="rounded-[2rem] p-1 shadow-2xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);">
-                    <div class="rounded-[calc(2rem-4px)] p-8" style="background: rgba(10,18,33,0.8);">
-                        <div class="flex items-center justify-between mb-8 pb-6" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                            <h3 class="font-bold text-xl text-white">Top 5 Scorer</h3>
-                            <i class="fas fa-medal text-2xl" style="color: #ccff00;"></i>
+            <div class="lg:col-span-3 reveal-right">
+                <div class="rounded-2xl overflow-hidden border" style="background: rgba(15,23,42,0.6); border-color: rgba(255,255,255,0.06);">
+                    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+                        <span class="text-sm font-semibold" style="color: #94a3b8;">Top 5 Pemain</span>
+                        <div class="flex items-center gap-2 text-xs">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span style="color: #64748b;">Live</span>
                         </div>
-
-                        <div class="space-y-3">
-                            @forelse($leaderboard as $index => $l)
-                            <div class="flex items-center gap-4 p-4 rounded-2xl transition-colors"
-                                 style="{{ $index === 0 ? 'background: rgba(204,255,0,0.06); border: 1px solid rgba(204,255,0,0.15);' : 'background: rgba(255,255,255,0.03);' }}">
-                                <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm"
-                                     style="{{ $index === 0 ? 'background: #ccff00; color: #0a1221;' : ($index === 1 ? 'background: #b8c9dd; color: #0a1221;' : ($index === 2 ? 'background: #8da3bd; color: #0a1221;' : 'background: rgba(255,255,255,0.06); color: #627d9e;')) }}">
-                                    {{ $index + 1 }}
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="font-bold truncate" style="color: {{ $index === 0 ? '#ccff00' : '#ffffff' }};">{{ $l->nama_pemain }}</p>
-                                    <p class="text-xs text-dark-400">{{ $l->total_sesi }} Sesi Bermain</p>
-                                </div>
-                                <div class="text-right shrink-0">
-                                    <p class="font-display font-black text-2xl" style="color: {{ $index === 0 ? '#ccff00' : '#ffffff' }};">{{ $l->total_gol }}</p>
-                                    <p class="text-[10px] uppercase tracking-widest text-dark-400 font-bold">GOL</p>
-                                </div>
+                    </div>
+                    <div class="divide-y" style="border-color: rgba(255,255,255,0.04);">
+                        @forelse($leaderboard as $index => $l)
+                        <div class="flex items-center gap-4 px-6 py-4 transition-colors"
+                             style="{{ $index === 0 ? 'background: rgba(16,185,129,0.04);' : '' }}">
+                            <span class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm font-mono"
+                                  style="{{ $index === 0 ? 'background: #10b981; color: white;' : ($index === 1 ? 'background: #475569; color: white;' : ($index === 2 ? 'background: #334155; color: white;' : 'background: rgba(255,255,255,0.04); color: #64748b;')) }}">
+                                {{ $index + 1 }}
+                            </span>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-white text-sm truncate">{{ $l->nama_pemain }}</p>
+                                <p class="text-xs" style="color: #64748b;">{{ $l->total_sesi }} sesi</p>
                             </div>
-                            @empty
-                            <p class="text-center text-dark-400 py-6">Belum ada data statistik.</p>
-                            @endforelse
+                            <div class="text-right">
+                                <p class="font-bold font-mono" style="color: #34d399;">{{ $l->total_gol }}</p>
+                                <p class="text-[10px] font-semibold tracking-widest" style="color: #64748b;">GOL</p>
+                            </div>
                         </div>
+                        @empty
+                        <div class="px-6 py-10 text-center">
+                            <p class="text-secondary-500">Belum ada data skor.</p>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -343,65 +343,93 @@
 </section>
 
 {{-- ============================================
-     TESTIMONI
+     TESTIMONI — Featured + Stacked
      ============================================ --}}
 @if($testimoni->count() > 0)
 <section class="py-24 bg-white relative overflow-hidden">
     <div class="container-custom">
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-            <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #8ab300;">Testimoni</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-dark-900 tracking-tight mb-4">Apa Kata Mereka?</h2>
-            <p class="text-dark-500 text-lg leading-relaxed">Pengalaman bermain dari para member Lapsal Futsal.</p>
+        <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+            <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">TESTIMONI</span>
+            <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Dari Member ke Member</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($testimoni as $t)
-            <div class="reveal bg-white rounded-3xl border border-dark-100/40 p-7 flex flex-col hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300" style="transition-delay: {{ $loop->index * 100 }}ms;">
-                <div class="flex items-center gap-1 mb-5">
-                    @for($i = 0; $i < $t->rating; $i++)
-                    <i class="fas fa-star text-sm" style="color: #a3cc00;"></i>
-                    @endfor
-                    @for($i = 0; $i < 5 - $t->rating; $i++)
-                    <i class="far fa-star text-dark-200 text-sm"></i>
-                    @endfor
-                </div>
-                <p class="text-dark-700 italic leading-relaxed flex-1 mb-7 text-sm">"{!! nl2br(e($t->ulasan ?? 'Mantap lapangannya!')) !!}"</p>
+        @php
+        $firstTestimoni = $testimoni->shift();
+        @endphp
 
-                <div class="flex items-center gap-4 pt-5" style="border-top: 1px solid rgba(0,0,0,0.06);">
-                    <img src="{{ $t->user->avatar_url }}" alt="" class="w-11 h-11 rounded-xl object-cover ring-2 ring-dark-100">
-                    <div>
-                        <p class="font-bold text-dark-900 text-sm">{{ $t->user->name }}</p>
-                        <p class="text-xs text-dark-400">Main di {{ $t->lapangan->nama }}</p>
+        <div class="grid md:grid-cols-3 gap-6">
+            {{-- Featured testimonial --}}
+            @if($firstTestimoni)
+            <div class="md:col-span-2 rounded-2xl p-8 md:p-10 reveal relative overflow-hidden"
+                 style="background: linear-gradient(135deg, #f0fdf4, #ffffff); border: 1px solid rgba(16,185,129,0.15);">
+                <div class="absolute top-0 right-0 w-40 h-40 rounded-full blur-[80px]" style="background: rgba(16,185,129,0.06);"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-1 mb-4">
+                        @for($i = 0; $i < $firstTestimoni->rating; $i++)
+                        <i class="fas fa-star text-sm" style="color: #10b981;"></i>
+                        @endfor
+                        @for($i = 0; $i < 5 - $firstTestimoni->rating; $i++)
+                        <i class="far fa-star text-sm" style="color: #d1d5db;"></i>
+                        @endfor
+                    </div>
+                    <p class="text-secondary-700 text-lg leading-relaxed italic">"{!! nl2br(e($firstTestimoni->ulasan ?? 'Mantap lapangannya!')) !!}"</p>
+                    <div class="flex items-center gap-4 mt-6 pt-5" style="border-top: 1px solid rgba(16,185,129,0.15);">
+                        <img src="{{ $firstTestimoni->user->avatar_url }}" alt="" class="w-12 h-12 rounded-xl object-cover">
+                        <div>
+                            <p class="font-bold text-secondary-900">{{ $firstTestimoni->user->name }}</p>
+                            <p class="text-xs text-secondary-500">Main di {{ $firstTestimoni->lapangan->nama }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            @endforeach
+            @endif
+
+            {{-- Remaining testimonials stacked --}}
+            <div class="space-y-4">
+                @forelse($testimoni as $t)
+                <div class="rounded-2xl p-5 border border-secondary-200/40 bg-white reveal" style="transition-delay: {{ $loop->index * 80 }}ms;">
+                    <div class="flex items-center gap-1 mb-2">
+                        @for($i = 0; $i < $t->rating; $i++)
+                        <i class="fas fa-star text-xs" style="color: #10b981;"></i>
+                        @endfor
+                    </div>
+                    <p class="text-sm text-secondary-600 leading-relaxed line-clamp-2">"{!! nl2br(e($t->ulasan ?? 'Mantap!')) !!}"</p>
+                    <div class="flex items-center gap-2 mt-3">
+                        <img src="{{ $t->user->avatar_url }}" alt="" class="w-7 h-7 rounded-lg object-cover">
+                        <p class="text-xs font-semibold text-secondary-800">{{ $t->user->name }}</p>
+                    </div>
+                </div>
+                @empty
+                <p class="text-center text-secondary-400 text-sm py-4">Testimoni lainnya tidak tersedia.</p>
+                @endforelse
+            </div>
         </div>
     </div>
 </section>
 @endif
 
 {{-- ============================================
-     CTA FINAL (NEW)
+     CTA — Event Poster Style
      ============================================ --}}
-<section class="relative py-28 overflow-hidden bg-mesh-dark">
-    <div class="absolute inset-0 dot-pattern opacity-20"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[180px]" style="background: rgba(204,255,0,0.08);"></div>
+<section class="relative py-28 overflow-hidden bg-gradient-dark">
+    <div class="absolute inset-0 dot-pattern opacity-10"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
-    <div class="container-custom relative z-10">
-        <div class="text-center max-w-3xl mx-auto reveal">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-8 animate-pulse-glow"
-                 style="background: rgba(204,255,0,0.1); border: 1px solid rgba(204,255,0,0.2);">
-                <i class="fas fa-futbol text-4xl" style="color: #ccff00;"></i>
+    <div class="container-custom relative z-10 text-center reveal">
+        <div class="max-w-2xl mx-auto">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full text-sm font-semibold mb-8"
+                 style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.15); color: #34d399;">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                {{ $slotTersedia }} slot tersedia
             </div>
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white tracking-tight mb-6">
-                Siap Main <span class="text-gradient-premium">Futsal?</span>
+            <h2 class="text-5xl md:text-6xl font-display font-black text-white leading-[1.05] tracking-tight">
+                Siap Main<br><span class="text-gradient-premium">Futsal?</span>
             </h2>
-            <p class="text-dark-300 text-xl leading-relaxed mb-10 max-w-xl mx-auto">
-                Jangan tunda lagi. Booking lapangan sekarang dan ajak timmu untuk bertanding!
+            <p class="text-secondary-400 text-lg mt-4 max-w-md mx-auto">
+                Booking sekarang. Ajak timmu. Langsung main.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('lapangan.index') }}" class="btn-primary text-lg px-12 py-5">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
+                <a href="{{ route('lapangan.index') }}" class="btn-primary text-lg px-12 py-5 shadow-2xl">
                     <i class="fas fa-bolt mr-2"></i> Booking Sekarang
                 </a>
                 @guest

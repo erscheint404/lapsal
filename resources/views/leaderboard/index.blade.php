@@ -3,15 +3,15 @@
 @section('content')
 <div class="section-dark min-h-screen pt-32 pb-24 relative overflow-hidden">
     <div class="absolute inset-0 grid-pattern"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-[100%] blur-[150px]" style="background: rgba(204,255,0,0.06);"></div>
-    <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-[150px]" style="background: rgba(0,229,255,0.04);"></div>
-    <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-[150px]" style="background: rgba(204,255,0,0.04);"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-[100%] blur-[150px]" style="background: rgba(16,185,129,0.06);"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-[150px]" style="background: rgba(16,185,129,0.04);"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-[150px]" style="background: rgba(16,185,129,0.04);"></div>
 
     <div class="container-custom relative z-10">
         <div class="text-center max-w-2xl mx-auto mb-16 reveal">
             <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 animate-pulse-glow"
-                 style="background: rgba(204,255,0,0.08); border: 1px solid rgba(204,255,0,0.2);">
-                <i class="fas fa-trophy text-4xl" style="color: #ccff00;"></i>
+                 style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);">
+                <i class="fas fa-trophy text-4xl" style="color: #10b981;"></i>
             </div>
             <h1 class="text-4xl md:text-5xl font-display font-black text-white tracking-tight mb-4 text-glow">
                 Top Scorer Leaderboard
@@ -49,22 +49,22 @@
             @php $rank1 = $leaderboard->get(0); @endphp
             @if($rank1)
             <div class="w-full md:w-56 flex flex-col items-center order-1 md:order-2 z-20 md:-mt-8">
-                <div class="absolute -top-16" style="color: #ccff00;"><i class="fas fa-crown text-4xl" style="filter: drop-shadow(0 0 15px rgba(204,255,0,0.6));"></i></div>
+                <div class="absolute -top-16" style="color: #10b981;"><i class="fas fa-crown text-4xl" style="filter: drop-shadow(0 0 15px rgba(16,185,129,0.6));"></i></div>
                 <div class="relative w-28 h-28 rounded-full flex items-center justify-center mb-[-2.5rem] z-10"
-                     style="background: #1a2740; border: 4px solid #ccff00; box-shadow: 0 0 50px rgba(204,255,0,0.25);">
+                     style="background: #1a2740; border: 4px solid #10b981; box-shadow: 0 0 50px rgba(16,185,129,0.25);">
                     <i class="fas fa-user text-5xl text-dark-400"></i>
-                    <div class="absolute -bottom-3 w-10 h-10 rounded-full flex items-center justify-center font-black text-lg" style="background: #ccff00; color: #0a1221; border: 3px solid #0f1b2e;">1</div>
+                    <div class="absolute -bottom-3 w-10 h-10 rounded-full flex items-center justify-center font-black text-lg" style="background: #10b981; color: #ffffff; border: 3px solid #0f1b2e;">1</div>
                 </div>
                 <div class="w-full rounded-t-3xl pt-14 pb-8 px-5 text-center h-60 flex flex-col justify-between relative overflow-hidden"
-                     style="background: linear-gradient(180deg, rgba(204,255,0,0.06), rgba(15,27,46,0.6)); border: 1px solid rgba(204,255,0,0.2); box-shadow: 0 -10px 40px rgba(204,255,0,0.08);">
+                     style="background: linear-gradient(180deg, rgba(16,185,129,0.06), rgba(15,27,46,0.6)); border: 1px solid rgba(16,185,129,0.2); box-shadow: 0 -10px 40px rgba(16,185,129,0.08);">
                     <div class="absolute inset-0 dot-pattern opacity-10"></div>
                     <div class="relative z-10">
-                        <p class="font-bold text-xl truncate w-full" style="color: #ccff00; text-shadow: 0 0 20px rgba(204,255,0,0.3);">{{ $rank1->nama_pemain }}</p>
-                        <p class="text-xs" style="color: rgba(204,255,0,0.5);">{{ $rank1->total_sesi }} Sesi</p>
+                        <p class="font-bold text-xl truncate w-full" style="color: #10b981; text-shadow: 0 0 20px rgba(16,185,129,0.3);">{{ $rank1->nama_pemain }}</p>
+                        <p class="text-xs" style="color: rgba(16,185,129,0.5);">{{ $rank1->total_sesi }} Sesi</p>
                     </div>
                     <div class="mt-auto relative z-10">
-                        <p class="text-5xl font-display font-black" style="color: #ccff00; text-shadow: 0 0 30px rgba(204,255,0,0.4);">{{ $rank1->total_gol }}</p>
-                        <p class="text-[12px] uppercase tracking-widest font-bold mt-1" style="color: rgba(204,255,0,0.6);">Gol</p>
+                        <p class="text-5xl font-display font-black" style="color: #10b981; text-shadow: 0 0 30px rgba(16,185,129,0.4);">{{ $rank1->total_gol }}</p>
+                        <p class="text-[12px] uppercase tracking-widest font-bold mt-1" style="color: rgba(16,185,129,0.6);">Gol</p>
                     </div>
                 </div>
             </div>
@@ -117,8 +117,8 @@
                         <p class="font-bold text-lg text-white truncate">{{ $l->nama_pemain }}</p>
                         <p class="text-xs text-dark-400">{{ $l->total_sesi }} Sesi Bermain</p>
                     </div>
-                    <div class="text-right px-6 py-2.5 rounded-2xl flex items-baseline gap-2 flex-none" style="background: rgba(204,255,0,0.05); border: 1px solid rgba(204,255,0,0.1);">
-                        <span class="font-display font-black text-2xl" style="color: #ccff00;">{{ $l->total_gol }}</span>
+                    <div class="text-right px-6 py-2.5 rounded-2xl flex items-baseline gap-2 flex-none" style="background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.1);">
+                        <span class="font-display font-black text-2xl" style="color: #10b981;">{{ $l->total_gol }}</span>
                         <span class="text-xs font-bold text-dark-500 uppercase">Gol</span>
                     </div>
                 </div>

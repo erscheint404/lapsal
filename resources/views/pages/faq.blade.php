@@ -1,20 +1,21 @@
 @extends('layouts.app')
 @section('title', 'FAQ')
 @section('content')
-<section class="section-dark pt-32 pb-16 relative">
+<section class="section-dark pt-32 pb-16 relative overflow-hidden">
     <div class="absolute inset-0 dot-pattern opacity-20"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-gold-400 to-primary-500"></div>
     <div class="container-custom relative z-10">
         <div class="text-center max-w-3xl mx-auto">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6" style="background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2);">
-                <i class="fas fa-question-circle text-3xl" style="color: #00e5ff;"></i>
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);">
+                <i class="fas fa-question-circle text-3xl" style="color: #10b981;"></i>
             </div>
-            <h1 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mb-4">Pertanyaan Umum</h1>
-            <p class="text-dark-300 text-lg leading-relaxed">Temukan jawaban untuk pertanyaan yang sering diajukan.</p>
+            <h1 class="text-5xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Pertanyaan Umum</h1>
+            <p class="text-secondary-300 text-lg leading-relaxed">Temukan jawaban untuk pertanyaan yang sering diajukan.</p>
         </div>
     </div>
 </section>
 
-<section class="py-16 bg-dark-50 -mt-1">
+<section class="py-16 bg-gradient-to-b from-secondary-50 to-white -mt-1">
     <div class="container-custom">
         <div class="max-w-3xl mx-auto space-y-4" x-data="{ active: null }">
             @php
@@ -31,34 +32,34 @@
             @endphp
 
             @foreach($faqs as $i => $faq)
-            <div class="card-premium overflow-hidden transition-all duration-300 reveal" style="transition-delay: {{ $i * 60 }}ms;"
+            <div class="bg-white rounded-2xl border border-secondary-200/40 overflow-hidden transition-all duration-300 reveal sport-corner" style="transition-delay: {{ $i * 60 }}ms;"
                  :class="active === {{ $i }} ? 'shadow-lg' : ''">
                 <button @click="active = active === {{ $i }} ? null : {{ $i }}"
                         class="w-full flex items-center gap-4 px-6 py-5 text-left focus:outline-none">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300"
-                         :style="active === {{ $i }} ? 'background: rgba(204,255,0,0.12); color: #6e8f00;' : 'background: rgba(0,0,0,0.03); color: #627d9e;'">
+                         :style="active === {{ $i }} ? 'background: rgba(16,185,129,0.12); color: #059669;' : 'background: rgba(0,0,0,0.03); color: #94a3b8;'">
                         <i class="fas {{ $faq['icon'] }}"></i>
                     </div>
-                    <span class="font-bold text-dark-900 text-lg pr-4 flex-1">{{ $faq['q'] }}</span>
-                    <i class="fas fa-chevron-down text-dark-400 transition-transform duration-300 shrink-0"
+                    <span class="font-bold text-secondary-900 text-lg pr-4 flex-1">{{ $faq['q'] }}</span>
+                    <i class="fas fa-chevron-down text-secondary-400 transition-transform duration-300 shrink-0"
                        :class="active === {{ $i }} ? 'rotate-180' : ''"
-                       :style="active === {{ $i }} ? 'color: #6e8f00;' : ''"></i>
+                       :style="active === {{ $i }} ? 'color: #059669;' : ''"></i>
                 </button>
                 <div x-show="active === {{ $i }}" x-collapse>
                     <div class="px-6 pb-6 pl-20">
-                        <p class="text-dark-600 leading-relaxed">{{ $faq['a'] }}</p>
+                        <p class="text-secondary-600 leading-relaxed">{{ $faq['a'] }}</p>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
 
-        <div class="text-center mt-16 p-10 rounded-3xl max-w-2xl mx-auto reveal" style="background: linear-gradient(135deg, rgba(204,255,0,0.05), rgba(0,229,255,0.05)); border: 1px solid rgba(204,255,0,0.1);">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: rgba(204,255,0,0.1);">
-                <i class="fas fa-headset text-2xl" style="color: #6e8f00;"></i>
+        <div class="text-center mt-16 p-10 rounded-2xl max-w-2xl mx-auto reveal" style="background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(251,191,36,0.05)); border: 1px solid rgba(16,185,129,0.1);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background: rgba(16,185,129,0.1);">
+                <i class="fas fa-headset text-2xl" style="color: #059669;"></i>
             </div>
-            <h3 class="text-xl font-bold text-dark-900 mb-2">Masih Punya Pertanyaan?</h3>
-            <p class="text-dark-500 mb-6">Tim kami siap membantu Anda. Hubungi kami melalui WhatsApp atau email.</p>
+            <h3 class="text-xl font-bold text-secondary-900 mb-2">Masih Punya Pertanyaan?</h3>
+            <p class="text-secondary-500 mb-6">Tim kami siap membantu Anda. Hubungi kami melalui WhatsApp atau email.</p>
             <a href="{{ route('kontak') }}" class="btn-primary">Hubungi Kami</a>
         </div>
     </div>

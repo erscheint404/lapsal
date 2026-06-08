@@ -1,0 +1,45 @@
+@startuml Verifikasi Pembayaran
+title Sequence Diagram - Verifikasi Pembayaran oleh Admin
+
+actor Admin
+boundary "admin/pembayaran/index.blade.php" as V1
+control "Admin\\PembayaranController" as C1
+control "BookingService" as C2
+control "QrCodeService" as C3
+entity "Booking" as M1
+entity "BuktiPembayaran" as M2
+entity "SlotWaktu" as M3
+entity "RiwayatBooking" as M4
+entity "Notifikasi" as M5
+
+Admin -> V1 : Buka_Daftar_Pembayaran()
+V1 -> C1 : index(Request)
+C1 -> M1 : with(user, lapangan, buktiPembayaran)->paginate()
+M1 --> C1 : daftar booking
+C1 --> V1 : showIndex(bookings)
+
+Admin -> V1 : Review_Bukti_dan_Verifikasi()
+
+alt Action = Approve
+    V1 -> C1 : verify(Request, booking) [action: approve]
+    C1 -> M2 : update(status: "verified", verified_by, verified_at)
+    C1 -> C2 : confirmBooking(booking, admin_id)
+    C2 -> M1 : update(status: "confirmed", confirmed_at)
+    C2 -> M3 : update(status: "booked")
+    C2 -> M4 : create(status_baru: "confirmed")
+    C2 -> M5 : kirim(user_id, "Booking Dikonfirmasi")
+    C1 -> C3 : generateForBooking(booking)
+    C3 -> M1 : update(qr_code_path)
+    C1 --> V1 : "Pembayaran diverifikasi"
+else Action = Reject
+    V1 -> C1 : verify(Request, booking) [action: reject]
+    C1 -> M2 : update(status: "rejected", verified_by, catatan)
+    C1 -> C2 : rejectBooking(booking, alasan, admin_id)
+    C2 -> M1 : update(status: "rejected", alasan_penolakan)
+    C2 -> M3 : update(status: "available")
+    C2 -> M4 : create(status_baru: "rejected")
+    C2 -> M5 : kirim(user_id, "Booking Ditolak")
+    C1 --> V1 : "Pembayaran ditolak"
+end
+
+@enduml

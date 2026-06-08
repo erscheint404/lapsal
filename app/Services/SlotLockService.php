@@ -17,6 +17,11 @@ class SlotLockService
         return DB::transaction(function () use ($slotWaktuId, $userId, $durasiMenit) {
             $slot = SlotWaktu::lockForUpdate()->findOrFail($slotWaktuId);
 
+            // Check if slot time has already passed (for today)
+            if ($slot->tanggal->isToday() && now()->format('H:i:s') >= $slot->jam_mulai) {
+                throw new \Exception('Slot ini sudah melewati waktunya dan tidak bisa dipesan.');
+            }
+
             // Check if slot is available
             if ($slot->status !== 'available') {
                 // Check if there's an existing lock by this user

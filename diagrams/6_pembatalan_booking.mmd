@@ -1,0 +1,37 @@
+sequenceDiagram
+    actor Member
+    participant V1 as member/booking/show.blade.php
+    participant V2 as member/booking/index.blade.php
+    participant C1 as Member\BookingController
+    participant C2 as BookingService
+    participant C3 as SlotLockService
+    participant M1 as Booking
+    participant M2 as SlotWaktu
+    participant M3 as SlotLock
+    participant M4 as RiwayatBooking
+    participant M5 as Notifikasi
+
+    Member->>V1: Klik_Batalkan_Booking()
+    V1->>C1: cancel(booking)
+    C1->>C1: cek ownership(user_id)
+    C1->>M1: canBeCancelled()
+    M1-->>C1: true/false
+
+    alt Tidak bisa dibatalkan
+        C1-->>V1: error("Booking tidak dapat dibatalkan")
+    else Bisa dibatalkan
+        C1->>C2: cancelBooking(booking, user_id)
+
+        alt Status sebelumnya = confirmed
+            C2->>C2: Hitung_Refund(total_harga x 75%)
+        end
+
+        C2->>M1: update(status: "cancelled", cancelled_at, refund_amount)
+        C2->>M2: update(status: "available")
+        C2->>C3: releaseLocksForBooking(booking)
+        C3->>M3: whereIn(slot_ids)->delete()
+        C2->>M4: create(booking_id, status_baru: "cancelled")
+        C2->>M5: kirim(user_id, "Booking Dibatalkan")
+        M5-->>C2: notifikasi
+        C1-->>V2: redirect(booking.index, "Booking berhasil dibatalkan")
+    end

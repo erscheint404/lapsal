@@ -18,12 +18,13 @@ class Kernel extends ConsoleKernel
         // Auto-complete bookings whose session time has passed
         $schedule->call(function () {
             $bookings = \App\Models\Booking::where('status', 'confirmed')
-                ->where('tanggal', '<', today())
-                ->orWhere(function ($q) {
-                    $q->where('tanggal', today())
-                      ->where('jam_selesai', '<', now()->format('H:i:s'));
+                ->where(function ($q) {
+                    $q->where('tanggal', '<', today())
+                      ->orWhere(function ($q2) {
+                          $q2->where('tanggal', today())
+                             ->where('jam_selesai', '<', now()->format('H:i:s'));
+                      });
                 })
-                ->where('status', 'confirmed')
                 ->get();
 
             $bookingService = app(\App\Services\BookingService::class);

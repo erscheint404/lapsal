@@ -5,8 +5,29 @@
 <div class="bg-gradient-subtle py-12 min-h-[calc(100vh-80px)]">
     <div class="container-custom max-w-5xl">
         <div class="mb-10">
-            <h1 class="text-3xl lg:text-4xl font-display font-black text-dark-900 tracking-tight">Konfirmasi Booking</h1>
-            <p class="text-dark-500 mt-2 leading-relaxed">Periksa kembali detail pesanan Anda sebelum melanjutkan ke pembayaran.</p>
+            <div class="flex items-center gap-2 mb-6 text-sm font-medium" x-data>
+                <div class="flex items-center gap-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">1</span>
+                    <span class="hidden sm:inline">Pilih Lapangan</span>
+                </div>
+                <svg class="w-5 h-5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <div class="flex items-center gap-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">2</span>
+                    <span class="hidden sm:inline">Pilih Jadwal</span>
+                </div>
+                <svg class="w-5 h-5 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <div class="flex items-center gap-2 text-emerald-600">
+                    <span class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">3</span>
+                    <span class="font-bold hidden sm:inline">Konfirmasi</span>
+                </div>
+                <svg class="w-5 h-5 text-secondary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <div class="flex items-center gap-2 text-secondary-400">
+                    <span class="w-7 h-7 rounded-full bg-secondary-100 text-secondary-500 flex items-center justify-center text-xs font-bold">4</span>
+                    <span class="hidden sm:inline">Bayar</span>
+                </div>
+            </div>
+            <h1 class="text-3xl lg:text-4xl font-display font-black text-secondary-900 tracking-tight">Konfirmasi Booking</h1>
+            <p class="text-secondary-500 mt-2 leading-relaxed">Periksa kembali detail pesanan Anda sebelum melanjutkan ke pembayaran.</p>
         </div>
 
         @if(!$selectedLapangan || $slots->isEmpty())
@@ -19,27 +40,27 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="md:col-span-2 space-y-6">
-                    <div class="card-premium p-7 md:p-8">
-                        <h3 class="text-lg font-bold text-dark-900 mb-5 pb-4 border-b border-dark-100/80">Detail Lapangan</h3>
+                    <div class="bg-white rounded-2xl border border-secondary-200/40 p-7 md:p-8">
+                        <h3 class="text-lg font-bold text-secondary-900 mb-5 pb-4 border-b border-secondary-100/80">Detail Lapangan</h3>
                         <div class="flex gap-5 items-start">
-                            <div class="w-24 h-24 rounded-2xl overflow-hidden bg-dark-100 flex-none hidden sm:block shadow-sm">
+                            <div class="w-24 h-24 rounded-2xl overflow-hidden bg-secondary-100 flex-none hidden sm:block shadow-sm">
                                 @if($selectedLapangan->foto_utama)
                                     <img src="{{ Storage::url($selectedLapangan->foto_utama) }}" class="w-full h-full object-cover">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-dark-300"><i class="fas fa-image text-2xl"></i></div>
+                                    <div class="w-full h-full flex items-center justify-center text-secondary-300"><i class="fas fa-image text-2xl"></i></div>
                                 @endif
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-dark-900 mb-1">{{ $selectedLapangan->nama }}</h4>
+                                <h4 class="text-xl font-bold text-secondary-900 mb-1">{{ $selectedLapangan->nama }}</h4>
                                 <span class="badge badge-success mb-2">{{ ucfirst(str_replace('_', ' ', $selectedLapangan->tipe)) }}</span>
-                                <p class="text-primary-600 font-bold text-lg mt-2">Rp {{ number_format($selectedLapangan->harga_per_jam, 0, ',', '.') }} <span class="text-dark-400 font-normal text-sm">/ jam</span></p>
+                                <p class="text-primary-600 font-bold text-lg mt-2">Rp {{ number_format($selectedLapangan->harga_per_jam, 0, ',', '.') }} <span class="text-secondary-400 font-normal text-sm">/ jam</span></p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-premium p-7 md:p-8">
-                        <h3 class="text-lg font-bold text-dark-900 mb-5 pb-4 border-b border-dark-100/80">Jadwal Terpilih</h3>
-                        <div class="flex items-center gap-4 mb-5 text-dark-700 bg-primary-50/80 p-5 rounded-2xl border border-primary-100/80">
+                    <div class="bg-white rounded-2xl border border-secondary-200/40 p-7 md:p-8">
+                        <h3 class="text-lg font-bold text-secondary-900 mb-5 pb-4 border-b border-secondary-100/80">Jadwal Terpilih</h3>
+                        <div class="flex items-center gap-4 mb-5 text-secondary-700 bg-primary-50/80 p-5 rounded-2xl border border-primary-100/80">
                             <div class="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center text-primary-600 text-xl">
                                 <i class="fas fa-calendar-alt"></i>
                             </div>
@@ -50,7 +71,7 @@
                         </div>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             @foreach($slots as $slot)
-                                <div class="bg-dark-50 border border-dark-200/80 text-dark-700 text-center py-2.5 px-3 rounded-xl font-medium text-sm hover:border-primary-300 transition-colors">
+                                <div class="bg-secondary-50 border border-secondary-200/80 text-secondary-700 text-center py-2.5 px-3 rounded-xl font-medium text-sm hover:border-primary-300 transition-colors">
                                     {{ substr($slot->jam_mulai, 0, 5) }} - {{ substr($slot->jam_selesai, 0, 5) }}
                                 </div>
                             @endforeach
@@ -59,7 +80,7 @@
                 </div>
 
                 <div class="md:col-span-1">
-                    <form action="{{ route('member.booking.store') }}" method="POST" class="card-premium p-7 sticky top-24 shadow-xl" x-data="{ metode: 'midtrans' }" id="booking-form">
+                    <form action="{{ route('member.booking.store') }}" method="POST" class="bg-white rounded-2xl border border-secondary-200/40 p-7 sticky top-24 shadow-xl" x-data="{ metode: 'midtrans' }" id="booking-form">
                         @csrf
                         <input type="hidden" name="lapangan_id" value="{{ $selectedLapangan->id }}">
                         <input type="hidden" name="tanggal" value="{{ $tanggal }}">
@@ -67,46 +88,46 @@
                             <input type="hidden" name="slot_ids[]" value="{{ $slot->id }}">
                         @endforeach
 
-                        <h3 class="text-lg font-bold text-dark-900 mb-5 pb-4 border-b border-dark-100/80">Ringkasan Biaya</h3>
+                        <h3 class="text-lg font-bold text-secondary-900 mb-5 pb-4 border-b border-secondary-100/80">Ringkasan Biaya</h3>
                         <div class="space-y-3 mb-6">
-                            <div class="flex justify-between text-sm text-dark-600">
+                            <div class="flex justify-between text-sm text-secondary-600">
                                 <span>Durasi Main</span>
-                                <span class="font-semibold text-dark-900">{{ count($slots) }} Jam</span>
+                                <span class="font-semibold text-secondary-900">{{ count($slots) }} Jam</span>
                             </div>
-                            <div class="flex justify-between text-sm text-dark-600">
+                            <div class="flex justify-between text-sm text-secondary-600">
                                 <span>Harga per Jam</span>
-                                <span class="font-semibold text-dark-900">Rp {{ number_format($selectedLapangan->harga_per_jam, 0, ',', '.') }}</span>
+                                <span class="font-semibold text-secondary-900">Rp {{ number_format($selectedLapangan->harga_per_jam, 0, ',', '.') }}</span>
                             </div>
-                            <div class="flex justify-between font-black text-lg text-primary-700 pt-4 mt-4 border-t border-dark-100/80">
+                            <div class="flex justify-between font-black text-lg text-primary-700 pt-4 mt-4 border-t border-secondary-100/80">
                                 <span>Total Tagihan</span>
                                 <span>Rp {{ number_format(count($slots) * $selectedLapangan->harga_per_jam, 0, ',', '.') }}</span>
                             </div>
                         </div>
 
-                        <h3 class="text-sm font-bold text-dark-900 mb-4">Metode Pembayaran</h3>
+                        <h3 class="text-sm font-bold text-secondary-900 mb-4">Metode Pembayaran</h3>
                         <div class="space-y-3 mb-6">
                             <label class="block relative cursor-pointer group">
                                 <input type="radio" name="metode_pembayaran" value="midtrans" x-model="metode" class="peer sr-only" required>
-                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50/50 bg-white border-dark-200/80 group-hover:border-primary-300">
+                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50/50 bg-white border-secondary-200/80 group-hover:border-primary-300">
                                     <div class="flex items-center justify-between">
-                                        <div class="font-bold text-dark-900">Otomatis (Midtrans)</div>
-                                        <div class="w-5 h-5 rounded-full border-2 border-dark-300 flex items-center justify-center">
+                                        <div class="font-bold text-secondary-900">Otomatis (Midtrans)</div>
+                                        <div class="w-5 h-5 rounded-full border-2 border-secondary-300 flex items-center justify-center">
                                             <div class="w-2.5 h-2.5 rounded-full bg-primary-600 opacity-0 transition-opacity" :class="metode === 'midtrans' ? 'opacity-100' : ''"></div>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-dark-500 mt-1">Transfer Bank (VA), QRIS, E-Wallet.</p>
+                                    <p class="text-xs text-secondary-500 mt-1">Transfer Bank (VA), QRIS, E-Wallet.</p>
                                 </div>
                             </label>
                             <label class="block relative cursor-pointer group">
                                 <input type="radio" name="metode_pembayaran" value="manual" x-model="metode" class="peer sr-only" required>
-                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50/50 bg-white border-dark-200/80 group-hover:border-primary-300">
+                                <div class="p-4 rounded-xl border-2 transition-all duration-200 peer-checked:border-primary-500 peer-checked:bg-primary-50/50 bg-white border-secondary-200/80 group-hover:border-primary-300">
                                     <div class="flex items-center justify-between">
-                                        <div class="font-bold text-dark-900">Transfer Manual</div>
-                                        <div class="w-5 h-5 rounded-full border-2 border-dark-300 flex items-center justify-center">
+                                        <div class="font-bold text-secondary-900">Transfer Manual</div>
+                                        <div class="w-5 h-5 rounded-full border-2 border-secondary-300 flex items-center justify-center">
                                             <div class="w-2.5 h-2.5 rounded-full bg-primary-600 opacity-0 transition-opacity" :class="metode === 'manual' ? 'opacity-100' : ''"></div>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-dark-500 mt-1">Transfer langsung ke rekening pengelola.</p>
+                                    <p class="text-xs text-secondary-500 mt-1">Transfer langsung ke rekening pengelola.</p>
                                 </div>
                             </label>
                         </div>

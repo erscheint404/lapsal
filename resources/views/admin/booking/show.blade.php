@@ -16,18 +16,18 @@
         
         {{-- Status Banner --}}
         <div class="rounded-3xl p-6 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm border"
-             style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.05)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.05)' : 'rgba(239,68,68,0.05)') }};
-                    border-color: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.2)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.2)' : 'rgba(239,68,68,0.2)') }};">
+             style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.05)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.05)' : 'rgba(239,68,68,0.05)') }};
+                    border-color: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.2)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)') }};">
             
             <div class="flex items-center gap-4">
                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
-                     style="background: white; border: 1px solid {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.3)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.3)' : 'rgba(239,68,68,0.3)') }};
-                            color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }};">
+                     style="background: white; border: 1px solid {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.3)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.3)') }};
+                            color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#059669' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#10b981' : '#dc2626') }};">
                     <i class="fas {{ in_array($booking->status, ['confirmed', 'completed']) ? 'fa-check' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'fa-clock' : 'fa-times') }} text-2xl"></i>
                 </div>
                 <div>
                     <p class="text-xs font-bold uppercase tracking-wider mb-1 text-dark-500">Status Terkini</p>
-                    <h2 class="text-xl font-black" style="color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }};">
+                    <h2 class="text-xl font-black" style="color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#059669' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#10b981' : '#dc2626') }};">
                         {{ $booking->status_label }}
                     </h2>
                 </div>
@@ -118,10 +118,10 @@
             
             <div class="bg-dark-900 p-4 rounded-2xl text-white mb-5 relative overflow-hidden">
                 <div class="absolute inset-0 dot-pattern opacity-10"></div>
-                <div class="absolute top-0 right-0 w-24 h-24 rounded-full blur-[30px]" style="background: rgba(204,255,0,0.15);"></div>
+                <div class="absolute top-0 right-0 w-24 h-24 rounded-full blur-[30px]" style="background: rgba(16,185,129,0.15);"></div>
                 <div class="relative z-10">
                     <p class="text-xs font-bold uppercase tracking-wider text-dark-400 mb-1">Total Tagihan</p>
-                    <p class="text-2xl font-black" style="color: #ccff00;">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</p>
+                    <p class="text-2xl font-black" style="color: #10b981;">Rp {{ number_format($booking->total_harga, 0, ',', '.') }}</p>
                 </div>
             </div>
 
@@ -139,7 +139,7 @@
                 @endif
                 <div class="flex justify-between items-center pt-1">
                     <span class="text-dark-500">Status</span>
-                    <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }};">
+                    <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#059669' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#10b981' : '#dc2626') }};">
                         {{ $booking->status_label }}
                     </span>
                 </div>

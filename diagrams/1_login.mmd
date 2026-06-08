@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor User
+    participant V1 as login.blade.php
+    participant C1 as LoginController
+    participant M1 as User
+
+    User->>V1: Buka_Form_Login()
+    V1->>C1: showLoginForm()
+    C1-->>V1: showForm(Object form)
+
+    User->>V1: Input_Email_dan_Password()
+    V1->>C1: login(Request)
+    C1->>C1: validate(email, password)
+    C1->>M1: attempt(email, password)
+    M1-->>C1: result
+
+    alt Login gagal
+        C1-->>V1: error("Email atau password salah")
+    else Login berhasil
+        C1->>M1: user()
+        M1-->>C1: User object
+        C1->>M1: isAdmin() / isPetugas()
+        M1-->>C1: role
+
+        alt Role = Admin / Petugas
+            C1-->>V1: redirect(admin/dashboard)
+        else Role = Member
+            C1-->>V1: redirect(member/dashboard)
+        end
+    end

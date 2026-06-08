@@ -43,6 +43,11 @@ class BookingService
                 } elseif ($slot->status !== 'available') {
                     throw new \Exception("Slot {$slot->waktu} tidak tersedia.");
                 }
+
+                // Reject slots whose time has already passed today
+                if ($tanggal === today()->format('Y-m-d') && now()->format('H:i:s') >= $slot->jam_mulai) {
+                    throw new \Exception("Slot {$slot->waktu} sudah melewati waktunya dan tidak bisa dipesan.");
+                }
             }
 
             $jamMulai = $slots->first()->jam_mulai;

@@ -77,7 +77,7 @@
                         <input type="file" name="foto_utama" id="foto_utama" class="hidden" accept="image/*" onchange="previewMainImage(event)">
                         <label for="foto_utama" class="flex flex-col items-center justify-center w-full aspect-video border-2 border-dashed rounded-2xl cursor-pointer transition-all duration-300"
                                style="background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.1);"
-                               onmouseover="this.style.background='rgba(204,255,0,0.02)';this.style.borderColor='rgba(204,255,0,0.3)'"
+                               onmouseover="this.style.background='rgba(16,185,129,0.02)';this.style.borderColor='rgba(16,185,129,0.3)'"
                                onmouseout="this.style.background='rgba(0,0,0,0.02)';this.style.borderColor='rgba(0,0,0,0.1)'">
                             @if($lapangan->foto_utama)
                             <div id="main-image-preview-container" class="flex w-full h-full p-2 relative">
@@ -88,7 +88,7 @@
                             </div>
                             @else
                             <div class="flex flex-col items-center justify-center pt-5 pb-6" id="upload-main-placeholder">
-                                <div class="w-12 h-12 rounded-xl mb-3 flex items-center justify-center" style="background: rgba(204,255,0,0.1); color: #6e8f00;">
+                                <div class="w-12 h-12 rounded-xl mb-3 flex items-center justify-center" style="background: rgba(16,185,129,0.1); color: #10b981;">
                                     <i class="fas fa-image text-2xl"></i>
                                 </div>
                                 <p class="mb-1 text-sm font-bold text-dark-900">Upload Foto Utama</p>

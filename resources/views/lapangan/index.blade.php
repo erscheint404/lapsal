@@ -2,25 +2,25 @@
 @section('title', 'Daftar Lapangan')
 @section('content')
 {{-- Header with dark background --}}
-<section class="section-dark pt-32 pb-16 relative">
+<section class="section-dark pt-32 pb-16 relative overflow-hidden">
     <div class="absolute inset-0 dot-pattern opacity-20"></div>
-    <div class="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full blur-[150px]" style="background: rgba(204,255,0,0.05);"></div>
+    <div class="absolute -bottom-20 left-1/3 w-80 h-80 rounded-full blur-[150px]" style="background: rgba(16,185,129,0.05);"></div>
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-gold-400 to-primary-500"></div>
     <div class="container-custom relative z-10">
         <div class="max-w-2xl">
-            <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #ccff00;">Temukan Lapanganmu</span>
-            <h1 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mb-4">Pilih Lapangan Futsal</h1>
-            <p class="text-dark-300 text-lg leading-relaxed">Pilih dari berbagai jenis lapangan dengan kualitas terbaik untuk timmu.</p>
+            <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #6ee7b7;">Temukan Lapanganmu</span>
+            <h1 class="text-5xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Pilih Lapangan Futsal</h1>
+            <p class="text-secondary-300 text-lg leading-relaxed">Pilih dari berbagai jenis lapangan dengan kualitas terbaik untuk timmu.</p>
         </div>
     </div>
 </section>
 
-<div class="bg-dark-50 py-12 -mt-1">
+<div class="bg-gradient-to-b from-secondary-50 to-white py-12 -mt-1">
     <div class="container-custom">
-        {{-- Search & Filter --}}
-        <div class="card-premium p-5 flex flex-col md:flex-row gap-4 mb-10 -mt-8 relative z-20 shadow-xl">
+        <div class="p-5 flex flex-col md:flex-row gap-4 mb-10 -mt-8 relative z-20 shadow-xl bg-white rounded-2xl border border-secondary-200/40">
             <form action="{{ route('lapangan.index') }}" method="GET" class="flex flex-col md:flex-row gap-4 w-full">
                 <div class="flex-1 relative">
-                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-dark-400"><i class="fas fa-search"></i></span>
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary-400"><i class="fas fa-search"></i></span>
                     <input type="text" name="search" value="{{ request('search') }}" class="form-input pl-11" placeholder="Cari nama lapangan...">
                 </div>
                 <div class="w-full md:w-48">
@@ -47,47 +47,47 @@
             </form>
         </div>
 
-        {{-- Grid --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse($lapangan as $l)
             <a href="{{ route('lapangan.show', $l->id) }}" class="group block h-full reveal" style="transition-delay: {{ $loop->index * 80 }}ms;">
-                <div class="card-hover h-full overflow-hidden flex flex-col bg-white">
+                <div class="bg-white rounded-2xl border border-secondary-200/40 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 h-full overflow-hidden flex flex-col sport-corner">
                     <div class="relative h-56 overflow-hidden">
                         @if($l->foto_utama)
                         <img src="{{ Storage::url($l->foto_utama) }}" alt="{{ $l->nama }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         @else
-                        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #1a2740, #0f1b2e);">
-                            <i class="fas fa-futbol text-4xl text-dark-600"></i>
+                        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
+                            <i class="fas fa-futbol text-4xl text-secondary-600"></i>
                         </div>
                         @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950/30 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary-900/30 to-transparent"></div>
                         <div class="absolute top-4 left-4">
-                            <span class="badge badge-info shadow-lg backdrop-blur-md bg-white/90 text-dark-700">
+                            <span class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm"
+                                  style="background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); color: #1e293b;">
                                 {{ ucfirst(str_replace('_', ' ', $l->tipe)) }}
                             </span>
                         </div>
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                         <div class="flex justify-between items-start mb-3 gap-2">
-                            <h3 class="font-display font-bold text-lg text-dark-900 line-clamp-2">{{ $l->nama }}</h3>
-                            <div class="flex items-center gap-1 text-xs font-bold flex-none px-2.5 py-1 rounded-xl" style="background: rgba(204,255,0,0.1); color: #6e8f00;">
-                                <i class="fas fa-star" style="color: #a3cc00;"></i> {{ $l->rata_rating }}
+                            <h3 class="font-display font-bold text-lg text-secondary-900 line-clamp-2">{{ $l->nama }}</h3>
+                            <div class="flex items-center gap-1 text-xs font-bold flex-none px-2.5 py-1 rounded-xl" style="background: rgba(16,185,129,0.1); color: #059669;">
+                                <i class="fas fa-star" style="color: #10b981;"></i> {{ $l->rata_rating }}
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mb-4">
                             @if(is_array($l->fasilitas))
                                 @foreach(array_slice($l->fasilitas, 0, 3) as $fasilitas)
-                                <span class="text-xs text-dark-500 bg-dark-50 px-2.5 py-1 rounded-lg border border-dark-100/60">{{ $fasilitas }}</span>
+                                <span class="text-xs text-secondary-500 bg-secondary-50 px-2.5 py-1 rounded-lg border border-secondary-100/60">{{ $fasilitas }}</span>
                                 @endforeach
                                 @if(count($l->fasilitas) > 3)
-                                <span class="text-xs text-dark-500 bg-dark-50 px-2.5 py-1 rounded-lg border border-dark-100/60">+{{ count($l->fasilitas) - 3 }}</span>
+                                <span class="text-xs text-secondary-500 bg-secondary-50 px-2.5 py-1 rounded-lg border border-secondary-100/60">+{{ count($l->fasilitas) - 3 }}</span>
                                 @endif
                             @endif
                         </div>
                         <div class="mt-auto pt-4 flex items-center justify-between" style="border-top: 1px solid rgba(0,0,0,0.06);">
                             <div>
-                                <p class="text-xs text-dark-400 font-medium uppercase tracking-wider">Harga / Jam</p>
-                                <p class="font-bold text-lg" style="color: #6e8f00;">Rp {{ number_format($l->harga_per_jam, 0, ',', '.') }}</p>
+                                <p class="text-xs text-secondary-400 font-medium uppercase tracking-wider">Harga / Jam</p>
+                                <p class="font-bold text-lg" style="color: #059669;">Rp {{ number_format($l->harga_per_jam, 0, ',', '.') }}</p>
                             </div>
                             <div class="btn-primary py-2.5 px-5 rounded-2xl shadow-none group-hover:shadow-lg transition-all text-sm">
                                 Pesan <i class="fas fa-arrow-right ml-1.5 text-xs"></i>
@@ -98,11 +98,11 @@
             </a>
             @empty
             <div class="col-span-full py-20 text-center">
-                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl" style="background: rgba(204,255,0,0.08); color: #6e8f00;">
+                <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl" style="background: rgba(16,185,129,0.08); color: #059669;">
                     <i class="fas fa-search"></i>
                 </div>
-                <h3 class="text-xl font-bold text-dark-900 mb-2">Tidak ditemukan</h3>
-                <p class="text-dark-500 mb-6">Coba ubah kata kunci atau filter pencarian.</p>
+                <h3 class="text-xl font-bold text-secondary-900 mb-2">Tidak ditemukan</h3>
+                <p class="text-secondary-500 mb-6">Coba ubah kata kunci atau filter pencarian.</p>
                 <a href="{{ route('lapangan.index') }}" class="btn-primary">Reset Pencarian</a>
             </div>
             @endforelse

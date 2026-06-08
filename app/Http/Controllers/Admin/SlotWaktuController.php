@@ -12,19 +12,17 @@ class SlotWaktuController extends Controller
 {
     public function index(Request $request)
     {
-        $lapanganList = Lapangan::aktif()->get();
-        $lapanganId = $request->get('lapangan_id', $lapanganList->first()?->id);
         $tanggal = $request->get('tanggal', today()->format('Y-m-d'));
 
-        $slots = collect();
-        if ($lapanganId) {
-            $slots = SlotWaktu::where('lapangan_id', $lapanganId)
-                ->where('tanggal', $tanggal)
-                ->orderBy('jam_mulai')
-                ->get();
-        }
+        $lapanganList = Lapangan::aktif()
+            ->with(['slotWaktu' => function ($query) use ($tanggal) {
+                $query->where('tanggal', $tanggal)->orderBy('jam_mulai');
+            }])
+            ->get();
 
-        return view('admin.slot.index', compact('lapanganList', 'lapanganId', 'tanggal', 'slots'));
+        $lapanganId = $request->get('lapangan_id', $lapanganList->first()?->id);
+
+        return view('admin.slot.index', compact('lapanganList', 'lapanganId', 'tanggal'));
     }
 
     public function generate(Request $request)

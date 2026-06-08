@@ -1,0 +1,27 @@
+sequenceDiagram
+    actor Member
+    participant V1 as manual-payment.blade.php
+    participant V2 as show.blade.php
+    participant C1 as ManualPaymentController
+    participant M1 as Booking
+    participant M2 as BuktiPembayaran
+    participant M3 as RiwayatBooking
+    participant M4 as User
+    participant M5 as Notifikasi
+
+    Member->>V1: Upload_Bukti_Transfer()
+    V1->>C1: uploadBukti(Request, booking)
+    C1->>C1: validate(bukti_transfer: image, max 5MB)
+    C1->>C1: store(file, "bukti-pembayaran")
+    C1->>M2: updateOrCreate(booking_id, file_path, status: "pending")
+    M2-->>C1: bukti pembayaran
+    C1->>M1: update(status: "under_review", metode: "manual")
+    C1->>M3: create(status_lama, status_baru: "under_review")
+    C1->>M4: whereHas(role: admin/petugas)->get()
+    M4-->>C1: daftar admin
+
+    loop Setiap Admin/Petugas
+        C1->>M5: kirim(admin_id, "Pembayaran Manual Baru")
+    end
+
+    C1-->>V2: redirect(booking.show, "Menunggu verifikasi")

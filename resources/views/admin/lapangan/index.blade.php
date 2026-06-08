@@ -52,7 +52,7 @@
                             <div>
                                 <div class="font-bold text-dark-900 mb-1">{{ $l->nama }}</div>
                                 <div class="text-xs text-dark-500 flex items-center gap-2">
-                                    <span class="flex items-center gap-1" style="color: #6e8f00;"><i class="fas fa-star" style="color: #a3cc00;"></i> {{ $l->rata_rating }}</span>
+                                    <span class="flex items-center gap-1" style="color: #10b981;"><i class="fas fa-star" style="color: #10b981;"></i> {{ $l->rata_rating }}</span>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                         <div class="font-bold text-dark-900">Rp {{ number_format($l->harga_per_jam, 0, ',', '.') }}</div>
                     </td>
                     <td class="py-4 px-6 text-center">
-                        <span class="badge" style="background: rgba(204,255,0,0.15); color: #526b00; border: 1px solid rgba(204,255,0,0.3);">Aktif</span>
+                        <span class="badge" style="background: rgba(16,185,129,0.15); color: #059669; border: 1px solid rgba(16,185,129,0.3);">Aktif</span>
                     </td>
                     <td class="py-4 px-6 text-right">
                         <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

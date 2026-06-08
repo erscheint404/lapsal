@@ -40,6 +40,16 @@ class HomeController extends Controller
                 ->count();
         });
 
+        // Slot hari ini untuk live card - cached 30s
+        $slotHariIni = Cache::remember('home.slot_hari_ini', 30, function () {
+            return SlotWaktu::with('lapangan')
+                ->where('tanggal', today())
+                ->where('status', 'available')
+                ->where('jam_mulai', '>', now()->format('H:i:s'))
+                ->orderBy('jam_mulai')
+                ->get();
+        });
+
         // Testimoni - cached 5 minutes
         $testimoni = Cache::remember('home.testimoni', 300, function () {
             return RatingLapangan::with(['user', 'lapangan'])
@@ -60,7 +70,7 @@ class HomeController extends Controller
 
         return view('home', compact(
             'lapangan', 'totalBooking', 'totalMember', 'rataRating',
-            'slotTersedia', 'testimoni', 'leaderboard'
+            'slotTersedia', 'slotHariIni', 'testimoni', 'leaderboard'
         ));
     }
 }

@@ -1,0 +1,43 @@
+sequenceDiagram
+    actor Member
+    participant V1 as checkout.blade.php
+    participant C1 as Member\BookingController
+    participant C2 as MidtransService
+    participant C3 as BookingService
+    participant M1 as Booking
+    participant M2 as SlotWaktu
+    participant M3 as RiwayatBooking
+    participant M4 as Notifikasi
+    participant API as Midtrans API
+
+    Member->>V1: Buka_Halaman_Checkout()
+    V1->>C1: checkout(booking)
+    C1->>M1: find(booking_id)
+    M1-->>C1: booking
+    C1->>C2: createSnapToken(booking)
+    C2->>API: Snap::getSnapToken(params)
+    API-->>C2: snap_token
+    C2->>M1: update(midtrans_snap_token, midtrans_order_id)
+    C2-->>C1: snap_token
+    C1-->>V1: showCheckout(booking, snapToken)
+
+    Member->>V1: Klik_Bayar()
+    V1->>API: snap.pay(token)
+    API-->>V1: payment popup
+    Member->>API: Selesaikan_Pembayaran()
+    API-->>V1: callback(finish)
+
+    API->>C2: handleNotification(order_id, transaction_status)
+    C2->>M1: where(kode_booking)->first()
+    M1-->>C2: booking
+
+    alt transaction_status = settlement
+        C2->>C3: confirmBooking(booking)
+        C3->>M1: update(status: "confirmed", confirmed_at)
+        C3->>M2: update(status: "booked")
+        C3->>M3: create(status_baru: "confirmed")
+        C3->>M4: kirim(user_id, "Booking Dikonfirmasi")
+    else transaction_status = expire/deny
+        C2->>M1: update(status: "expired")
+        C2->>M2: update(status: "available")
+    end

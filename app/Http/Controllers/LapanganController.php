@@ -74,17 +74,22 @@ class LapanganController extends Controller
      */
     public function getSlots($lapanganId, $tanggal)
     {
+        $isToday = $tanggal === today()->format('Y-m-d');
+        $currentTime = now()->format('H:i:s');
+
         $slots = SlotWaktu::where('lapangan_id', $lapanganId)
             ->where('tanggal', $tanggal)
             ->orderBy('jam_mulai')
             ->get()
-            ->map(function ($slot) {
+            ->map(function ($slot) use ($isToday, $currentTime) {
+                $isPassed = $isToday && $currentTime >= $slot->jam_mulai;
+
                 return [
                     'id' => $slot->id,
                     'jam_mulai' => substr($slot->jam_mulai, 0, 5),
                     'jam_selesai' => substr($slot->jam_selesai, 0, 5),
-                    'status' => $slot->status,
-                    'label' => $slot->status_label,
+                    'status' => $isPassed ? 'passed' : $slot->status,
+                    'label' => $isPassed ? 'Sudah Lewat' : $slot->status_label,
                 ];
             });
 

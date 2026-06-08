@@ -59,7 +59,7 @@
                         <div class="text-xs text-dark-500"><i class="far fa-clock mr-1"></i> {{ $booking->buktiPembayaran ? $booking->buktiPembayaran->created_at->format('d M H:i') : '-' }}</div>
                     </td>
                     <td class="py-4 px-6 text-center">
-                        <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }};">
+                        <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#059669' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#10b981' : '#dc2626') }};">
                             {{ $booking->status_label }}
                         </span>
                     </td>

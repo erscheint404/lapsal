@@ -6,12 +6,12 @@
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     {{-- Scanner Area --}}
-    <div class="card-premium overflow-hidden border-2" style="border-color: rgba(204,255,0,0.3);">
+    <div class="card-premium overflow-hidden border-2" style="border-color: rgba(16,185,129,0.3);">
         <div class="p-6 text-center text-white relative overflow-hidden" style="background: linear-gradient(135deg, #0a1221, #0f1b2e);">
             <div class="absolute inset-0 dot-pattern opacity-10"></div>
-            <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(204,255,0,0.15);"></div>
+            <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(16,185,129,0.15);"></div>
             <div class="relative z-10">
-                <i class="fas fa-qrcode text-4xl mb-3" style="color: #ccff00;"></i>
+                <i class="fas fa-qrcode text-4xl mb-3" style="color: #10b981;"></i>
                 <h3 class="text-xl font-bold tracking-tight mb-1">Arahkan Kamera ke QR Code</h3>
                 <p class="text-sm" style="color: rgba(255,255,255,0.7);">Pastikan kode berada di tengah kotak merah</p>
             </div>
@@ -22,11 +22,11 @@
             
             {{-- Scanning effect overlay --}}
             <div class="absolute top-4 left-4 right-4 bottom-4 pointer-events-none z-10 flex items-center justify-center">
-                <div class="w-48 h-48 border-2 border-dashed rounded-xl relative" style="border-color: rgba(204,255,0,0.5);">
-                    <div class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 rounded-tl-xl" style="border-color: #ccff00;"></div>
-                    <div class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 rounded-tr-xl" style="border-color: #ccff00;"></div>
-                    <div class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 rounded-bl-xl" style="border-color: #ccff00;"></div>
-                    <div class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 rounded-br-xl" style="border-color: #ccff00;"></div>
+                <div class="w-48 h-48 border-2 border-dashed rounded-xl relative" style="border-color: rgba(16,185,129,0.5);">
+                    <div class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 rounded-tl-xl" style="border-color: #10b981;"></div>
+                    <div class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 rounded-tr-xl" style="border-color: #10b981;"></div>
+                    <div class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 rounded-bl-xl" style="border-color: #10b981;"></div>
+                    <div class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 rounded-br-xl" style="border-color: #10b981;"></div>
                     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-b from-transparent to-primary-500/50 animate-scan"></div>
                 </div>
             </div>
@@ -50,11 +50,11 @@
     @if(session('booking'))
         @php $booking = session('booking'); @endphp
         <div class="space-y-6 reveal-right">
-            <div class="card-premium p-8 relative overflow-hidden" style="border: 2px solid #ccff00; background: linear-gradient(135deg, white, #f8fafc);">
-                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(204,255,0,0.15);"></div>
+            <div class="card-premium p-8 relative overflow-hidden" style="border: 2px solid #10b981; background: linear-gradient(135deg, white, #f8fafc);">
+<div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-[40px]" style="background: rgba(16,185,129,0.15);"></div>
                 
                 <div class="flex items-center gap-4 mb-8 relative z-10 pb-6 border-b border-dark-100/60">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-lg" style="background: #ccff00; color: #0a1221;">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-lg" style="background: #10b981; color: white;">
                         <i class="fas fa-check-circle text-3xl"></i>
                     </div>
                     <div>
@@ -80,8 +80,8 @@
                         <div class="bg-dark-50 p-4 rounded-xl border border-dark-100/60 shadow-inner">
                             <p class="font-bold text-dark-900 text-lg mb-2">{{ $booking->lapangan->nama }}</p>
                             <div class="grid grid-cols-2 gap-4 text-sm font-medium">
-                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-calendar-alt" style="color: #6e8f00;"></i> {{ $booking->tanggal->format('d M Y') }}</div>
-                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-clock" style="color: #6e8f00;"></i> {{ substr($booking->jam_mulai, 0, 5) }} - {{ substr($booking->jam_selesai, 0, 5) }}</div>
+                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-calendar-alt" style="color: #10b981;"></i> {{ $booking->tanggal->format('d M Y') }}</div>
+                                <div class="flex items-center gap-2 text-dark-600"><i class="far fa-clock" style="color: #10b981;"></i> {{ substr($booking->jam_mulai, 0, 5) }} - {{ substr($booking->jam_selesai, 0, 5) }}</div>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                     <div class="pt-6 border-t border-dark-100/60 flex items-center justify-between">
                         <div>
                             <p class="text-xs font-bold text-dark-400 uppercase tracking-wider mb-1">Status</p>
-                            <span class="badge" style="background: rgba(204,255,0,0.15); color: #526b00; border: 1px solid rgba(204,255,0,0.3);">{{ $booking->status_label }}</span>
+                            <span class="badge" style="background: rgba(16,185,129,0.15); color: #059669; border: 1px solid rgba(16,185,129,0.3);">{{ $booking->status_label }}</span>
                         </div>
                         
                         @if($booking->status === 'confirmed')
@@ -135,7 +135,7 @@
             #reader video { object-fit: cover !important; border-radius: 1rem; }
             #reader__dashboard_section_csr span { color: white !important; font-family: inherit !important; }
             #reader__dashboard_section_csr button { background: #0f1b2e !important; color: white !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0.5rem !important; padding: 0.5rem 1rem !important; font-weight: 600 !important; cursor: pointer !important; }
-            #reader a { color: #ccff00 !important; text-decoration: none !important; }
+            #reader a { color: #10b981 !important; text-decoration: none !important; }
         `;
         document.head.appendChild(style);
 

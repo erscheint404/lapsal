@@ -1,0 +1,50 @@
+@startuml Booking Lapangan
+title Sequence Diagram - Booking Lapangan
+
+actor Member
+boundary "create.blade.php" as V1
+control "Member\\BookingController" as C1
+control "SlotLockService" as C2
+control "BookingService" as C3
+entity "Lapangan" as M1
+entity "SlotWaktu" as M2
+entity "SlotLock" as M3
+entity "Booking" as M4
+entity "RiwayatBooking" as M5
+
+Member -> V1 : Buka_Form_Booking()
+V1 -> C1 : create(Request)
+C1 -> M1 : aktif()->get()
+M1 --> C1 : daftar lapangan
+C1 --> V1 : showForm(lapanganList, slots)
+
+Member -> V1 : Pilih_Lapangan_Tanggal_Slot()
+
+loop Setiap slot yang dipilih
+    V1 -> C1 : lockSlots(Request)
+    C1 -> C2 : lockMultipleSlots(slot_ids, user_id)
+    C2 -> M2 : lockForUpdate()->findOrFail(slot_id)
+    M2 --> C2 : slot data
+    C2 -> M3 : create(slot_waktu_id, user_id, expired_at)
+    M3 --> C2 : slot lock
+    C2 -> M2 : update(status: "reserved")
+    C2 --> C1 : locks berhasil
+    C1 --> V1 : JSON(remaining_seconds)
+end
+
+Member -> V1 : Pilih_Metode_Bayar_dan_Submit()
+V1 -> C1 : store(Request)
+C1 -> C3 : createBooking(user_id, lapangan_id, tanggal, slot_ids, metode)
+C3 -> M1 : findOrFail(lapangan_id)
+M1 --> C3 : lapangan
+C3 -> M2 : whereIn(slot_ids)->lockForUpdate()->get()
+M2 --> C3 : slots
+C3 -> C3 : Hitung_Total_Harga()
+C3 -> M4 : create(kode_booking, user_id, total_harga, status: "pending_payment")
+M4 --> C3 : booking
+C3 -> M2 : update(status: "reserved")
+C3 -> M5 : create(booking_id, status_baru: "pending_payment")
+C3 --> C1 : booking
+C1 --> V1 : redirect(checkout)
+
+@enduml

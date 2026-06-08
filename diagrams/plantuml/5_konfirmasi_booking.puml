@@ -1,0 +1,33 @@
+@startuml Konfirmasi Booking
+title Sequence Diagram - Konfirmasi Booking oleh Admin
+
+actor Admin
+boundary "admin/booking/show.blade.php" as V1
+control "Admin\\BookingController" as C1
+control "BookingService" as C2
+control "QrCodeService" as C3
+entity "Booking" as M1
+entity "SlotWaktu" as M2
+entity "RiwayatBooking" as M3
+entity "Notifikasi" as M4
+
+Admin -> V1 : Buka_Detail_Booking()
+V1 -> C1 : show(booking)
+C1 -> M1 : load(user, lapangan, buktiPembayaran, riwayat, rating)
+M1 --> C1 : booking detail
+C1 --> V1 : showDetail(booking)
+
+Admin -> V1 : Klik_Konfirmasi()
+V1 -> C1 : confirm(booking)
+C1 -> C2 : confirmBooking(booking, admin_id)
+C2 -> M1 : update(status: "confirmed", confirmed_at)
+C2 -> M2 : update(status: "booked")
+C2 -> M3 : create(booking_id, status_baru: "confirmed")
+C2 -> M4 : kirim(user_id, "Booking Dikonfirmasi")
+M4 --> C2 : notifikasi
+C1 -> C3 : generateForBooking(booking)
+C3 -> C3 : QrCode::generate(data)
+C3 -> M1 : update(qr_code_path)
+C1 --> V1 : "Booking dikonfirmasi dan QR Code digenerate"
+
+@enduml

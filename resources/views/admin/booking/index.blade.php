@@ -6,8 +6,8 @@
 @section('page_actions')
 <div class="flex items-center gap-3">
     <div class="bg-white px-4 py-2 rounded-xl shadow-sm border border-dark-100 flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full" style="background: #007a8f;"></span>
-        <span class="text-sm font-bold text-dark-900">Perlu Review: <span style="color: #007a8f;">{{ \App\Models\Booking::where('status', 'under_review')->count() }}</span></span>
+        <span class="w-2.5 h-2.5 rounded-full" style="background: #10b981;"></span>
+        <span class="text-sm font-bold text-dark-900">Perlu Review: <span style="color: #10b981;">{{ \App\Models\Booking::where('status', 'under_review')->count() }}</span></span>
     </div>
 </div>
 @endsection
@@ -75,7 +75,7 @@
                         @endif
                     </td>
                     <td class="py-4 px-6 text-center">
-                        <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#526b00' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#007a8f' : '#dc2626') }}; border: 1px solid {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(204,255,0,0.3)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(0,229,255,0.2)' : 'rgba(239,68,68,0.2)') }};">
+                        <span class="badge" style="background: {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.15)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)') }}; color: {{ in_array($booking->status, ['confirmed', 'completed']) ? '#059669' : (in_array($booking->status, ['pending_payment', 'under_review']) ? '#10b981' : '#dc2626') }}; border: 1px solid {{ in_array($booking->status, ['confirmed', 'completed']) ? 'rgba(16,185,129,0.3)' : (in_array($booking->status, ['pending_payment', 'under_review']) ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)') }};">
                             {{ $booking->status_label }}
                         </span>
                     </td>

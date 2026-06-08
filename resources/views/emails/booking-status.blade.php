@@ -9,8 +9,8 @@
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .card { background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
         .header { padding: 32px 28px; text-align: center; }
-        .header.rejected { background: linear-gradient(135deg, #ef4444, #dc2626); }
-        .header.cancelled { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .header.rejected { background: linear-gradient(135deg, #10b981, #059669); }
+        .header.cancelled { background: linear-gradient(135deg, #10b981, #059669); }
         .header.completed { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .header.other { background: linear-gradient(135deg, #6b7280, #4b5563); }
         .header h1 { color: #fff; margin: 0; font-size: 22px; font-weight: 800; }
@@ -18,7 +18,7 @@
         .body { padding: 32px 28px; }
         .badge { display: inline-block; padding: 6px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; }
         .badge.success { background: #d1fae5; color: #065f46; }
-        .badge.danger { background: #fee2e2; color: #991b1b; }
+        .badge.danger { background: #fee2e2; color: #065f46; }
         .badge.warning { background: #fef3c7; color: #92400e; }
         .badge.info { background: #dbeafe; color: #1e40af; }
         .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
@@ -92,13 +92,13 @@
                 </div>
 
                 @if($booking->status === 'rejected' && $booking->alasan_penolakan)
-                <div class="message-box" style="border-left-color: #ef4444;">
+                <div class="message-box" style="border-left-color: #10b981;">
                     <strong>Alasan Penolakan:</strong><br>{{ $booking->alasan_penolakan }}
                 </div>
                 @endif
 
                 @if($booking->status === 'cancelled')
-                <div class="message-box" style="border-left-color: #f59e0b;">
+                <div class="message-box" style="border-left-color: #10b981;">
                     Booking ini telah dibatalkan. Jika ada refund, akan diproses sesuai ketentuan yang berlaku.
                 </div>
                 @endif

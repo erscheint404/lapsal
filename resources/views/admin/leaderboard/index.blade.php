@@ -39,7 +39,7 @@
                         <tr class="hover:bg-dark-50/50 transition-colors group">
                             <td class="py-4 px-6">
                                 @if($index == 0)
-                                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm" style="background: rgba(204,255,0,0.15); color: #6e8f00; border: 1px solid rgba(204,255,0,0.3);">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm" style="background: rgba(16,185,129,0.15); color: #059669; border: 1px solid rgba(16,185,129,0.3);">
                                         <i class="fas fa-crown text-xs"></i>
                                     </div>
                                 @elseif($index == 1)
@@ -101,19 +101,19 @@
     <div class="space-y-6">
         <div class="card-premium p-6" style="background: linear-gradient(135deg, #1a2740 0%, #0f1b2e 100%); border-color: rgba(255,255,255,0.06); color: white;">
             <h3 class="font-bold text-lg mb-4 text-white flex items-center gap-2">
-                <i class="fas fa-info-circle" style="color: #ccff00;"></i> Aturan Leaderboard
+                <i class="fas fa-info-circle" style="color: #10b981;"></i> Aturan Leaderboard
             </h3>
             <ul class="space-y-3.5 text-sm text-dark-300">
                 <li class="flex items-start gap-2.5">
-                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #ccff00;"></i>
+                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #10b981;"></i>
                     <span><strong>Batas 30 Pemain</strong>: Sistem membatasi hanya top 30 pencetak gol terbanyak yang masuk ke papan peringkat utama.</span>
                 </li>
                 <li class="flex items-start gap-2.5">
-                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #ccff00;"></i>
+                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #10b981;"></i>
                     <span><strong>Verifikasi Booking</strong>: Catatan gol harus terikat ke sebuah booking lapangan yang statusnya telah <strong>Selesai (Completed)</strong>.</span>
                 </li>
                 <li class="flex items-start gap-2.5">
-                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #ccff00;"></i>
+                    <i class="fas fa-check-circle mt-0.5 shrink-0" style="color: #10b981;"></i>
                     <span><strong>Penghapusan Pemain</strong>: Menghapus pemain dari panel ini akan menghapus semua statistik gol yang terikat pada nama pemain tersebut.</span>
                 </li>
             </ul>

@@ -1,0 +1,41 @@
+sequenceDiagram
+    actor Admin
+    participant V1 as admin/pembayaran/index.blade.php
+    participant C1 as Admin\PembayaranController
+    participant C2 as BookingService
+    participant C3 as QrCodeService
+    participant M1 as Booking
+    participant M2 as BuktiPembayaran
+    participant M3 as SlotWaktu
+    participant M4 as RiwayatBooking
+    participant M5 as Notifikasi
+
+    Admin->>V1: Buka_Daftar_Pembayaran()
+    V1->>C1: index(Request)
+    C1->>M1: with(user, lapangan, buktiPembayaran)->paginate()
+    M1-->>C1: daftar booking
+    C1-->>V1: showIndex(bookings)
+
+    Admin->>V1: Review_Bukti_dan_Verifikasi()
+
+    alt Action = Approve
+        V1->>C1: verify(Request, booking) [action: approve]
+        C1->>M2: update(status: "verified", verified_by, verified_at)
+        C1->>C2: confirmBooking(booking, admin_id)
+        C2->>M1: update(status: "confirmed", confirmed_at)
+        C2->>M3: update(status: "booked")
+        C2->>M4: create(status_baru: "confirmed")
+        C2->>M5: kirim(user_id, "Booking Dikonfirmasi")
+        C1->>C3: generateForBooking(booking)
+        C3->>M1: update(qr_code_path)
+        C1-->>V1: "Pembayaran diverifikasi"
+    else Action = Reject
+        V1->>C1: verify(Request, booking) [action: reject]
+        C1->>M2: update(status: "rejected", verified_by, catatan)
+        C1->>C2: rejectBooking(booking, alasan, admin_id)
+        C2->>M1: update(status: "rejected", alasan_penolakan)
+        C2->>M3: update(status: "available")
+        C2->>M4: create(status_baru: "rejected")
+        C2->>M5: kirim(user_id, "Booking Ditolak")
+        C1-->>V1: "Pembayaran ditolak"
+    end
