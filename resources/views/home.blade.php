@@ -4,15 +4,15 @@
 {{-- ============================================
      HERO — Live Dashboard Style
      ============================================ --}}
-<section class="relative min-h-[100dvh] flex items-center overflow-hidden bg-gradient-dark">
+<section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-dark">
     <div class="absolute inset-0 dot-pattern opacity-10"></div>
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
     <div class="container-custom relative z-10 pt-32 pb-20 w-full">
-        <div class="grid lg:grid-cols-12 gap-10 items-center">
-            {{-- Left: Headline + CTA --}}
-            <div class="lg:col-span-7 max-w-2xl" x-data="{ show: false }" x-init="setTimeout(() => show = true, 50)">
-                <div class="flex items-center gap-3 px-4 py-2 rounded-full text-sm font-semibold mb-8 w-fit transition-all duration-700"
+        <div class="flex flex-col items-center text-center">
+            {{-- Headline + CTA --}}
+            <div class="max-w-4xl flex flex-col items-center" x-data="{ show: false }" x-init="setTimeout(() => show = true, 50)">
+                <div class="flex items-center justify-center gap-3 px-5 py-2 rounded-full text-sm font-semibold mb-8 w-fit mx-auto transition-all duration-700"
                      style="background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.2); color: #6ee7b7;"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'">
                     <span class="relative flex h-2 w-2">
@@ -22,83 +22,45 @@
                     <span class="font-mono font-bold">{{ $slotTersedia }}</span> slot tersedia hari ini
                 </div>
 
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-white leading-[1.05] tracking-tight transition-all duration-700 delay-100"
+                <h1 class="text-6xl sm:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] tracking-tight transition-all duration-700 delay-100 mx-auto"
                     :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
                     Main Futsal,<br>
                     <span class="text-gradient-premium">Makin Gampang</span>
                 </h1>
 
-                <p class="text-lg text-secondary-300 mt-6 max-w-lg leading-relaxed transition-all duration-700 delay-200"
+                <p class="text-xl text-secondary-300 mt-8 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200"
                    :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    Cek jadwal, booking lapangan, bayar online. Cuma perlu 2 menit.
+                    Cek jadwal, booking lapangan, dan bayar secara online dalam hitungan menit. Jangan biarkan tim lawan mengambil jadwalmu!
                 </p>
 
-                <div class="flex flex-wrap gap-4 mt-10 transition-all duration-700 delay-300"
+                <div class="flex flex-wrap justify-center gap-4 mt-12 transition-all duration-700 delay-300"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    <a href="{{ route('lapangan.index') }}" class="btn-primary text-lg px-10 py-5">
+                    <a href="{{ route('lapangan.index') }}" class="btn-primary text-lg px-10 py-4 sm:px-12 sm:py-5 shadow-2xl">
                         <i class="fas fa-search mr-2"></i> Cari Lapangan
                     </a>
-                    <a href="#cara-kerja" class="btn-outline-light text-lg px-10 py-5">
+                    <a href="#cara-kerja" class="btn-outline-light text-lg px-10 py-4 sm:px-12 sm:py-5">
                         Cara Kerja
                     </a>
                 </div>
 
-                <div class="flex items-center gap-8 mt-14 pt-8 transition-all duration-700 delay-400"
+                <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 mt-16 pt-8 w-full max-w-3xl mx-auto transition-all duration-700 delay-400"
                      style="border-top: 1px solid rgba(255,255,255,0.06);"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    <div>
-                        <p class="text-3xl font-display font-black text-white" data-count="{{ $totalMember }}">0</p>
-                        <p class="text-xs font-semibold text-secondary-400 mt-1">Member Aktif</p>
+                    <div class="text-center">
+                        <p class="text-4xl md:text-5xl font-display font-black text-white" data-count="{{ $totalMember }}">0</p>
+                        <p class="text-sm font-semibold text-secondary-400 mt-2">Member Aktif</p>
                     </div>
-                    <div class="w-px h-10" style="background: rgba(255,255,255,0.08);"></div>
-                    <div>
-                        <p class="text-3xl font-display font-black text-white" data-count="{{ $totalBooking }}">0</p>
-                        <p class="text-xs font-semibold text-secondary-400 mt-1">Total Booking</p>
+                    <div class="w-px h-12 hidden md:block" style="background: rgba(255,255,255,0.08);"></div>
+                    <div class="text-center">
+                        <p class="text-4xl md:text-5xl font-display font-black text-white" data-count="{{ $totalBooking }}">0</p>
+                        <p class="text-sm font-semibold text-secondary-400 mt-2">Total Booking</p>
                     </div>
-                    <div class="w-px h-10" style="background: rgba(255,255,255,0.08);"></div>
-                    <div>
-                        <p class="text-3xl font-display font-black text-white flex items-center gap-1">
-                            {{ $rataRating }} <i class="fas fa-star text-sm" style="color: #10b981;"></i>
+                    <div class="w-px h-12 hidden md:block" style="background: rgba(255,255,255,0.08);"></div>
+                    <div class="text-center">
+                        <p class="text-4xl md:text-5xl font-display font-black text-white flex items-center justify-center gap-2">
+                            {{ $rataRating }} <i class="fas fa-star text-2xl" style="color: #10b981;"></i>
                         </p>
-                        <p class="text-xs font-semibold text-secondary-400 mt-1">Rating</p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Right: Live Availability Card --}}
-            <div class="lg:col-span-5 transition-all duration-700 delay-300"
-                 :class="show ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'">
-                <div class="rounded-2xl border overflow-hidden" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
-                    {{-- Card header --}}
-                    <div class="px-6 py-4 flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                        <div class="flex items-center gap-2 text-sm font-semibold text-white">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                            Live — Slot Hari Ini
-                        </div>
-                        <a href="{{ route('lapangan.index') }}" class="text-xs font-semibold" style="color: #34d399;">Lihat semua →</a>
-                    </div>
-
-                    {{-- Slot list --}}
-                    <div class="p-5 space-y-3 max-h-[320px] overflow-y-auto custom-scrollbar">
-                        @forelse($slotHariIni->take(5) as $slot)
-                        <a href="{{ route('lapangan.show', $slot->lapangan_id) }}" class="flex items-center gap-4 p-3 rounded-xl transition-all duration-200 group"
-                           style="background: rgba(255,255,255,0.03);"
-                           onmouseover="this.style.background='rgba(16,185,129,0.08)'"
-                           onmouseout="this.style.background='rgba(255,255,255,0.03)'">
-                            <div class="flex-1 min-w-0">
-                                <p class="font-bold text-white text-sm truncate">{{ $slot->lapangan->nama ?? 'Lapangan' }}</p>
-                                <p class="text-xs text-secondary-400 mt-0.5">
-                                    {{ substr($slot->jam_mulai, 0, 5) }} - {{ substr($slot->jam_selesai, 0, 5) }} WIB
-                                </p>
-                            </div>
-                            <span class="px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap"
-                                  style="background: rgba(16,185,129,0.15); color: #34d399;">
-                                Rp{{ number_format($slot->harga ?? 0, 0, ',', '.') }}
-                            </span>
-                        </a>
-                        @empty
-                        <p class="text-center text-secondary-400 text-sm py-8">Semua slot terisi hari ini.</p>
-                        @endforelse
+                        <p class="text-sm font-semibold text-secondary-400 mt-2">Rating Rata-rata</p>
                     </div>
                 </div>
             </div>
