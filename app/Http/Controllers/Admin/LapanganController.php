@@ -38,12 +38,17 @@ class LapanganController extends Controller
             'harga_per_jam' => 'required|numeric|min:0',
             'tipe' => 'required|in:vinyl,rumput_sintetis,semen,parquette',
             'status' => 'required|in:aktif,nonaktif',
-            'fasilitas' => 'nullable|array',
+            'fasilitas' => 'nullable|string',
             'foto_utama' => 'nullable|image|max:2048',
             'foto_tambahan.*' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except(['foto_utama', 'foto_tambahan']);
+        $data = $request->except(['foto_utama', 'foto_tambahan', '_token']);
+
+        // Konversi fasilitas dari string koma ke array
+        if (isset($data['fasilitas']) && is_string($data['fasilitas'])) {
+            $data['fasilitas'] = array_map('trim', array_filter(explode(',', $data['fasilitas'])));
+        }
 
         if ($request->hasFile('foto_utama')) {
             $data['foto_utama'] = $request->file('foto_utama')->store('lapangan', 'public');
@@ -89,12 +94,17 @@ class LapanganController extends Controller
             'harga_per_jam' => 'required|numeric|min:0',
             'tipe' => 'required|in:vinyl,rumput_sintetis,semen,parquette',
             'status' => 'required|in:aktif,nonaktif',
-            'fasilitas' => 'nullable|array',
+            'fasilitas' => 'nullable|string',
             'foto_utama' => 'nullable|image|max:2048',
             'foto_tambahan.*' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->except(['foto_utama', 'foto_tambahan']);
+        $data = $request->except(['foto_utama', 'foto_tambahan', '_token', '_method']);
+
+        // Konversi fasilitas dari string koma ke array
+        if (isset($data['fasilitas']) && is_string($data['fasilitas'])) {
+            $data['fasilitas'] = array_map('trim', array_filter(explode(',', $data['fasilitas'])));
+        }
 
         if ($request->hasFile('foto_utama')) {
             if ($lapangan->foto_utama) {

@@ -106,6 +106,15 @@
                     @error('foto_utama')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                 </div>
 
+                <div class="mb-5">
+                    <label class="form-label">Status Lapangan <span class="text-red-500">*</span></label>
+                    <select name="status" class="form-input" required>
+                        <option value="aktif" {{ old('status', $lapangan->status) == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="nonaktif" {{ old('status', $lapangan->status) == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                    </select>
+                    @error('status')<p class="form-error">{{ $message }}</p>@enderror
+                </div>
+
                 <div class="pt-4" style="border-top: 1px solid rgba(0,0,0,0.06);">
                     <button type="submit" class="btn-primary w-full text-sm py-3.5 shadow-lg shadow-primary-500/20">
                         <i class="fas fa-save mr-2"></i> Update Lapangan
