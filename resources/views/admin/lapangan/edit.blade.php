@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('admin.lapangan.update', $lapangan->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.lapangan.update', $lapangan->id) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -143,6 +143,20 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // Vercel-php fix: only use multipart/form-data when files are selected
+    document.querySelector('form').addEventListener('submit', function() {
+        const fileInputs = this.querySelectorAll('input[type="file"]');
+        let hasFile = false;
+        fileInputs.forEach(function(input) {
+            if (input.files && input.files.length > 0) hasFile = true;
+        });
+        if (hasFile) {
+            this.setAttribute('enctype', 'multipart/form-data');
+        } else {
+            this.removeAttribute('enctype');
+        }
+    });
 </script>
 @endpush
 @endsection
