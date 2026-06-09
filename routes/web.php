@@ -116,3 +116,14 @@ Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->g
     Route::post('notifikasi/{notifikasi}/read', [\App\Http\Controllers\Member\NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
     Route::post('notifikasi/read-all', [\App\Http\Controllers\Member\NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.readAll');
 });
+
+// Rute khusus untuk di-ping oleh Cron Job agar DB Aiven tidak mati
+Route::get('/ping-db', function () {
+    try {
+        // Melakukan query sangat ringan ke database
+        \Illuminate\Support\Facades\DB::select('SELECT 1');
+        return response()->json(['status' => 'Database is awake!']);
+    } catch (\Exception $e) {
+        return response()->json(['status' => 'Database error', 'error' => $e->getMessage()], 500);
+    }
+});
