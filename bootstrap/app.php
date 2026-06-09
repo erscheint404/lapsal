@@ -27,6 +27,10 @@ if ($isVercel) {
     $app->useStoragePath('/tmp/storage');
     
     // 2. Arahkan semua kompilasi bootstrap cache ke /tmp agar tidak menulis ke root yang read-only
+    // Determine the Vercel URL for APP_URL
+    $vercelUrl = $_ENV['VERCEL_URL'] ?? $_SERVER['VERCEL_URL'] ?? getenv('VERCEL_URL');
+    $appUrl = $vercelUrl ? 'https://' . $vercelUrl : 'https://project-2oeum.vercel.app';
+    
     $tmpCaches = [
         'APP_CONFIG_CACHE' => '/tmp/config.php',
         'APP_SERVICES_CACHE' => '/tmp/services.php',
@@ -37,6 +41,9 @@ if ($isVercel) {
         'LOG_CHANNEL' => 'stderr',
         'CACHE_DRIVER' => 'file',
         'SESSION_DRIVER' => 'cookie',
+        'SESSION_SECURE_COOKIE' => 'true',
+        'SESSION_ENCRYPT' => 'true',
+        'APP_URL' => $appUrl,
         'QUEUE_CONNECTION' => 'sync',
     ];
 
