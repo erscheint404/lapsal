@@ -71,7 +71,7 @@
                 <div class="bg-white rounded-2xl border border-secondary-200/40 p-7 md:p-8 sport-corner">
                     <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
                         <div>
-                            <h1 class="text-3xl lg:text-4xl font-display font-bold text-secondary-900 tracking-tight mb-3">{{ $lapangan->nama }}</h1>
+                            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-secondary-900 tracking-tight mb-3">{{ $lapangan->nama }}</h1>
                             <div class="flex items-center gap-4 text-sm flex-wrap">
                                 <div class="flex items-center font-bold px-3 py-1.5 rounded-xl" style="background: rgba(16,185,129,0.1); color: #059669;">
                                     <i class="fas fa-star mr-1.5" style="color: #10b981;"></i> {{ $lapangan->rata_rating }}

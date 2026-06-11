@@ -13,7 +13,7 @@
                  style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);">
                 <i class="fas fa-users text-4xl" style="color: #10b981;"></i>
             </div>
-            <h2 class="text-4xl font-display font-black text-white tracking-tight mb-4">Gabung <span class="text-gradient-premium">Sekarang</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-display font-black text-white tracking-tight mb-4">Gabung <span class="text-gradient-premium">Sekarang</span></h2>
             <p class="text-secondary-300 text-lg leading-relaxed">Daftar gratis dan nikmati kemudahan booking lapangan futsal kapan saja, di mana saja.</p>
 
             <div class="mt-12 space-y-4 text-left max-w-sm mx-auto pt-8" style="border-top: 1px solid rgba(255,255,255,0.06);">
@@ -44,7 +44,7 @@
                      style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 20px rgba(16,185,129,0.25);">
                     <i class="fas fa-user-plus text-white text-xl"></i>
                 </div>
-                <h1 class="text-3xl font-display font-bold text-secondary-900 tracking-tight">Buat Akun</h1>
+                <h1 class="text-2xl sm:text-3xl font-display font-bold text-secondary-900 tracking-tight">Buat Akun</h1>
                 <p class="text-secondary-500 mt-2">Bergabung dan mulai booking lapangan futsal</p>
             </div>
 

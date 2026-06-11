@@ -4,7 +4,7 @@
 {{-- ============================================
      HERO — Live Dashboard Style
      ============================================ --}}
-<section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-gradient-dark">
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-dark">
     <div class="absolute inset-0 dot-pattern opacity-10"></div>
     <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-primary-300 to-primary-500"></div>
 
@@ -22,16 +22,16 @@
                     <span class="font-mono font-bold">{{ $slotTersedia }}</span> slot tersedia hari ini
                 </div>
 
-                <h1 class="text-6xl sm:text-7xl lg:text-8xl font-display font-black text-white leading-[1.05] tracking-tight transition-all duration-700 delay-100 mx-auto"
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black text-white leading-[1.1] tracking-tight transition-all duration-700 delay-100 mx-auto px-4"
                     :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
                     Main Futsal,<br>
                     <span class="text-gradient-premium">Makin Gampang</span>
                 </h1>
 
-                <p class="text-xl text-secondary-300 mt-8 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200"
-                   :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
-                    Cek jadwal, booking lapangan, dan bayar secara online dalam hitungan menit. Jangan biarkan tim lawan mengambil jadwalmu!
-                </p>
+            <p class="text-base sm:text-lg md:text-xl text-secondary-300 mt-6 sm:mt-8 max-w-2xl mx-auto leading-relaxed transition-all duration-700 delay-200 px-4"
+               :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
+                Cek jadwal, booking lapangan, dan bayar secara online dalam hitungan menit. Jangan biarkan tim lawan mengambil jadwalmu!
+            </p>
 
                 <div class="flex flex-wrap justify-center gap-4 mt-12 transition-all duration-700 delay-300"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
@@ -43,24 +43,22 @@
                     </a>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 mt-16 pt-8 w-full max-w-3xl mx-auto transition-all duration-700 delay-400"
+                <div class="grid grid-cols-3 gap-4 sm:gap-8 md:gap-16 mt-12 sm:mt-16 pt-8 w-full max-w-3xl mx-auto transition-all duration-700 delay-400"
                      style="border-top: 1px solid rgba(255,255,255,0.06);"
                      :class="show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'">
                     <div class="text-center">
-                        <p class="text-4xl md:text-5xl font-display font-black text-white" data-count="{{ $totalMember }}">0</p>
-                        <p class="text-sm font-semibold text-secondary-400 mt-2">Member Aktif</p>
+                        <p class="text-2xl sm:text-3xl md:text-5xl font-display font-black text-white" data-count="{{ $totalMember }}">0</p>
+                        <p class="text-[10px] sm:text-sm font-semibold text-secondary-400 mt-1 sm:mt-2">Member Aktif</p>
                     </div>
-                    <div class="w-px h-12 hidden md:block" style="background: rgba(255,255,255,0.08);"></div>
                     <div class="text-center">
-                        <p class="text-4xl md:text-5xl font-display font-black text-white" data-count="{{ $totalBooking }}">0</p>
-                        <p class="text-sm font-semibold text-secondary-400 mt-2">Total Booking</p>
+                        <p class="text-2xl sm:text-3xl md:text-5xl font-display font-black text-white" data-count="{{ $totalBooking }}">0</p>
+                        <p class="text-[10px] sm:text-sm font-semibold text-secondary-400 mt-1 sm:mt-2">Total Booking</p>
                     </div>
-                    <div class="w-px h-12 hidden md:block" style="background: rgba(255,255,255,0.08);"></div>
                     <div class="text-center">
-                        <p class="text-4xl md:text-5xl font-display font-black text-white flex items-center justify-center gap-2">
-                            {{ $rataRating }} <i class="fas fa-star text-2xl" style="color: #10b981;"></i>
+                        <p class="text-2xl sm:text-3xl md:text-5xl font-display font-black text-white flex items-center justify-center gap-1 sm:gap-2">
+                            {{ $rataRating }} <i class="fas fa-star text-sm sm:text-xl md:text-2xl" style="color: #10b981;"></i>
                         </p>
-                        <p class="text-sm font-semibold text-secondary-400 mt-2">Rating Rata-rata</p>
+                        <p class="text-[10px] sm:text-sm font-semibold text-secondary-400 mt-1 sm:mt-2">Rating Rata-rata</p>
                     </div>
                 </div>
             </div>
@@ -76,7 +74,7 @@
         <div class="flex items-end justify-between gap-6 mb-12 reveal">
             <div>
                 <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">PILIHAN TERBAIK</span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Pilihan Lapangan</h2>
+                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Pilihan Lapangan</h2>
             </div>
             <a href="{{ route('lapangan.index') }}" class="btn-secondary text-sm shrink-0 hidden sm:inline-flex">
                 Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
@@ -132,7 +130,7 @@
     <div class="container-custom relative z-10">
         <div class="text-center max-w-2xl mx-auto mb-20 reveal">
             <span class="text-xs font-bold uppercase tracking-widest" style="color: #34d399;">CARA KERJA</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight mt-2">Booking dalam 4 Langkah</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white tracking-tight mt-2">Booking dalam 4 Langkah</h2>
             <p class="text-secondary-400 mt-3">Dari cari lapangan sampai main, semuanya online.</p>
         </div>
 
@@ -178,7 +176,7 @@
     <div class="container-custom">
         <div class="text-center max-w-2xl mx-auto mb-16 reveal">
             <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">FASILITAS</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Kenapa Pilih Kami?</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Kenapa Pilih Kami?</h2>
         </div>
 
         @php
@@ -259,7 +257,7 @@
                      style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.15); color: #34d399;">
                     <i class="fas fa-trophy"></i> LEADERBOARD
                 </div>
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-white leading-[1.1] tracking-tight">Pencetak Gol<br>Terbanyak</h2>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white leading-[1.1] tracking-tight">Pencetak Gol<br>Terbanyak</h2>
                 <p class="text-secondary-400 mt-4 leading-relaxed">Setiap gol yang kamu cetak tercatat. Naikkan peringkatmu dan jadi yang terbaik.</p>
                 <a href="{{ route('leaderboard.index') }}" class="btn-outline-light mt-8 inline-flex text-sm px-6 py-3">
                     Lihat Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
@@ -312,7 +310,7 @@
     <div class="container-custom">
         <div class="text-center max-w-2xl mx-auto mb-16 reveal">
             <span class="text-xs font-bold uppercase tracking-widest" style="color: #059669;">TESTIMONI</span>
-            <h2 class="text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Dari Member ke Member</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-secondary-900 tracking-tight mt-2">Dari Member ke Member</h2>
         </div>
 
         @php
@@ -384,7 +382,7 @@
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 {{ $slotTersedia }} slot tersedia
             </div>
-            <h2 class="text-5xl md:text-6xl font-display font-black text-white leading-[1.05] tracking-tight">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-display font-black text-white leading-[1.1] tracking-tight">
                 Siap Main<br><span class="text-gradient-premium">Futsal?</span>
             </h2>
             <p class="text-secondary-400 text-lg mt-4 max-w-md mx-auto">

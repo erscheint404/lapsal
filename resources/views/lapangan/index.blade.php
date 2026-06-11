@@ -9,7 +9,7 @@
     <div class="container-custom relative z-10">
         <div class="max-w-2xl">
             <span class="text-sm font-bold uppercase tracking-widest mb-3 block" style="color: #6ee7b7;">Temukan Lapanganmu</span>
-            <h1 class="text-5xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Pilih Lapangan Futsal</h1>
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Pilih Lapangan Futsal</h1>
             <p class="text-secondary-300 text-lg leading-relaxed">Pilih dari berbagai jenis lapangan dengan kualitas terbaik untuk timmu.</p>
         </div>
     </div>

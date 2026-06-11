@@ -14,21 +14,21 @@
                  style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);">
                 <i class="fas fa-futbol text-4xl" style="color: #10b981;"></i>
             </div>
-            <h2 class="text-4xl font-display font-black text-white tracking-tight mb-4">Selamat Datang<br>di <span class="text-gradient-premium">Lapsal</span></h2>
+            <h2 class="text-3xl sm:text-4xl font-display font-black text-white tracking-tight mb-4">Selamat Datang<br>di <span class="text-gradient-premium">Lapsal</span></h2>
             <p class="text-secondary-300 text-lg leading-relaxed">Platform booking lapangan futsal terpercaya. Main lebih mudah, jadwal lebih pasti.</p>
 
-            <div class="mt-12 grid grid-cols-3 gap-6 pt-8" style="border-top: 1px solid rgba(255,255,255,0.06);">
+            <div class="mt-8 sm:mt-12 grid grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8" style="border-top: 1px solid rgba(255,255,255,0.06);">
                 <div>
-                    <p class="text-2xl font-display font-black text-white">24/7</p>
-                    <p class="text-xs text-secondary-400 mt-1">Booking Online</p>
+                    <p class="text-xl sm:text-2xl font-display font-black text-white">24/7</p>
+                    <p class="text-[10px] sm:text-xs text-secondary-400 mt-1">Booking Online</p>
                 </div>
                 <div>
-                    <p class="text-2xl font-display font-black text-white">100+</p>
-                    <p class="text-xs text-secondary-400 mt-1">Member Aktif</p>
+                    <p class="text-xl sm:text-2xl font-display font-black text-white">100+</p>
+                    <p class="text-[10px] sm:text-xs text-secondary-400 mt-1">Member Aktif</p>
                 </div>
                 <div>
-                    <p class="text-2xl font-display font-black text-white">4.9</p>
-                    <p class="text-xs text-secondary-400 mt-1">Rating</p>
+                    <p class="text-xl sm:text-2xl font-display font-black text-white">4.9</p>
+                    <p class="text-[10px] sm:text-xs text-secondary-400 mt-1">Rating</p>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                      style="background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 20px rgba(16,185,129,0.25);">
                     <i class="fas fa-sign-in-alt text-white text-xl"></i>
                 </div>
-                <h1 class="text-3xl font-display font-bold text-secondary-900 tracking-tight">Masuk ke Akun</h1>
+                <h1 class="text-2xl sm:text-3xl font-display font-bold text-secondary-900 tracking-tight">Masuk ke Akun</h1>
                 <p class="text-secondary-500 mt-2">Masukkan kredensial Anda untuk melanjutkan</p>
             </div>
 

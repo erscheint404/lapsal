@@ -13,7 +13,7 @@
                  style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);">
                 <i class="fas fa-trophy text-4xl" style="color: #10b981;"></i>
             </div>
-            <h1 class="text-4xl md:text-5xl font-display font-black text-white tracking-tight mb-4 text-glow">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white tracking-tight mb-4 text-glow">
                 Top Scorer Leaderboard
             </h1>
             <p class="text-dark-300 text-lg leading-relaxed">Pemain dengan catatan gol terbanyak sepanjang masa di Lapsal Futsal.</p>

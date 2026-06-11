@@ -9,7 +9,7 @@
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6" style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);">
                 <i class="fas fa-paper-plane text-3xl" style="color: #10b981;"></i>
             </div>
-            <h1 class="text-5xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Ada yang bisa kami bantu?</h1>
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-white tracking-tight mb-4">Ada yang bisa kami bantu?</h1>
             <p class="text-secondary-300 text-lg leading-relaxed">Jangan ragu untuk menghubungi tim Lapsal Futsal.</p>
         </div>
     </div>

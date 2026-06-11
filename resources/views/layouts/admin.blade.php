@@ -19,7 +19,7 @@
 
     @stack('styles')
 </head>
-<body class="font-sans text-secondary-700 bg-secondary-50 antialiased" x-data="{ sidebarOpen: false }">
+<body class="font-sans text-secondary-700 bg-secondary-50 antialiased overflow-x-hidden" x-data="{ sidebarOpen: false }">
 
     <div class="flex h-screen overflow-hidden">
         @include('components.admin-sidebar')
@@ -32,7 +32,7 @@
                 <div class="mb-8">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <h1 class="text-3xl lg:text-4xl font-display font-bold text-secondary-900 tracking-tight">@yield('page_title', 'Dashboard')</h1>
+                            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-secondary-900 tracking-tight">@yield('page_title', 'Dashboard')</h1>
                             @hasSection('page_description')
                                 <p class="text-secondary-500 mt-1.5">@yield('page_description')</p>
                             @endif

@@ -1,7 +1,7 @@
 <nav class="fixed top-0 inset-x-0 z-50 transition-all duration-500"
      x-data="{ scrolled: false, mobileMenuOpen: false }"
-     @scroll.window="scrolled = (window.pageYOffset > 20)"
-     :class="scrolled ? 'py-2' : 'py-4'">
+      @scroll.window="scrolled = (window.pageYOffset > 20)"
+      :class="scrolled ? 'py-2 sm:py-2' : 'py-3 sm:py-4'">
     {{-- Glassmorphism background --}}
     <div class="absolute inset-0 transition-all duration-500"
          :class="scrolled ? 'opacity-100' : 'opacity-0'"
@@ -18,7 +18,7 @@
                      style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 4px 20px rgba(16,185,129,0.3);">
                     <i class="fas fa-futbol text-xl"></i>
                 </div>
-                <span class="font-display font-black text-2xl tracking-tight text-white">
+                <span class="font-display font-black text-xl sm:text-2xl tracking-tight text-white truncate max-w-[160px] sm:max-w-none">
                     {{ \App\Models\Pengaturan::getValue('nama_web', 'Lapsal') }}
                 </span>
             </a>

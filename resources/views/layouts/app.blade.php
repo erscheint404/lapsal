@@ -24,7 +24,7 @@
 
     @stack('styles')
 </head>
-<body class="font-sans text-secondary-700 bg-secondary-50 antialiased flex flex-col min-h-screen">
+<body class="font-sans text-secondary-700 bg-secondary-50 antialiased flex flex-col min-h-screen overflow-x-hidden">
 
     @include('components.navbar')
 
